@@ -49,7 +49,7 @@
               >
                 <i class="el-icon-delete"></i>
               </span> -->
-            </span>
+            <!-- </span> -->
           </div>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
