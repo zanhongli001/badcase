@@ -110,7 +110,7 @@ export default {
         }
     }, 
     created(){
-        this.getOrderList()
+        // this.getOrderList()
     },
     methods:{
         // 上传

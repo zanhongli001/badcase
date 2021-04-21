@@ -43,6 +43,12 @@ const router = new Router({
         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/files.vue')
        
       },
+      {
+        name:'badUplode',
+        path: 'badUplode',
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badUplode')
+       
+      },
     ]
     },
     // {
