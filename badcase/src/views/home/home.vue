@@ -27,7 +27,7 @@
                 <el-menu 
                     :router="true"
                     :unique-opened="true"
-                    :default-active="activeIndex"
+                    :default-active="onRoutes"
                 >
                 <el-submenu index="1">
                     <template slot="title">
@@ -78,7 +78,7 @@ export default {
     // },
     data(){
         return{
-            activeIndex: 'policy'
+          
         }
     } ,   
     methods:{
@@ -90,7 +90,12 @@ export default {
         // handleLogin(){
         //     this.$router.push('/login')
         // }
-    }
+    },
+    	computed: {
+			onRoutes() {
+				return this.$route.path.replace('/', '');
+			},
+		},
 }
 </script>
 <style>
