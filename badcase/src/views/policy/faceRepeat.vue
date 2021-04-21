@@ -2,17 +2,17 @@
     <div>
         <h2>人脸排重</h2>
         <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="选择类型">
+            <el-form-item label="选择类型" >
                 <el-select v-model="form.region" placeholder="人脸数据">
-                <el-option label="人脸数据" value="shanghai"></el-option>
-                <el-option label="声纹数据" value="beijing"></el-option>
-                <el-option label="TV logo数据" value="beijing"></el-option>
+                    <el-option label="人脸数据" value="shanghai" @click.native="isHide"></el-option>
+                    <el-option label="声纹数据" value="beijing" @click.native="isHide"></el-option>
+                    <el-option label="TV logo数据" value="jilin" @click.native="isShow"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item>
+            <el-form-item v-if="isFace">
                 <el-col :span="7">
                     <el-form-item label="活动名称">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.names"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="7">
@@ -32,6 +32,12 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
+            </el-form-item>
+            <el-form-item v-if="isLogo">
+                    <el-form-item label="logo">
+                        <el-input v-model="form.names"></el-input>
+                    </el-form-item>
+                
             </el-form-item>
             <el-form-item>
                 <el-button type="primary">查询</el-button>
@@ -75,40 +81,50 @@
 export default {
     data(){
         return {
-          form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
+            isLogo:false,
+            isFace:true,
+            form: {
+                names: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            },
+            tableData: [{
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
+            }, {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+            }, {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
+            }]
         }
     },
     created(){
         
     },
     methods:{
-     
+        // logo
+        isHide(){
+            this.isLogo = false;
+            this.isFace = true;
+        },
+        isShow(){
+            this.isLogo = true;
+            this.isFace = false;
+        }
     }
 }
 </script>

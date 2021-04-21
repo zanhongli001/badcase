@@ -1,40 +1,50 @@
 <template>
     <div>
         <h2>详情</h2>
+        <div>
+            <p>
+                <span>任务ID</span>
+                <span>D2021040804</span>
+            </p>
+            <p>
+                <span>数据类型</span>
+                <span>人脸数据</span>
+            </p>
+            <p>
+                <span>数据描述</span>
+                <span>增加石涛的人脸</span>
+            </p>
+            <p>
+                <span>底库分类</span>
+                <span v-for="(item,index) in numCassfil" :key="index">
+                    {{item}}
+                </span>
+            </p>
+            <p>
+                <span>数据文件</span>
+                <img :src="index" class="avatar" v-for="(index,i) in imageUrl" :key="i">
+                <!-- <div v-for="(item,ind) in imageUrl" :key="ind">
+                  <img :src="item" alt="">
+                </div> -->
+            </p>
+            <p>
+                <span>审核操作</span>
+                <span>仅审核人员权限看到审核操作这个板块</span>
+            </p>
+        </div>
         <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="任务ID">
-                <el-input v-model="form.desc"></el-input>
-            </el-form-item>
-            <el-form-item label="数据类型">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="数据描述">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="数据分类">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="数据文件">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="审核操作">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
             <el-form-item>
-                <e-col :span="7">
-                    <el-radio-group v-model="form.resource">
-                        <el-radio label="线上品牌商赞助"></el-radio>
-                        <el-radio label="线下场地免费"></el-radio>
+                <div class="classfil">
+                    <el-radio-group v-model="form.desc">
+                        <el-radio label="上传底库"></el-radio>
+                        <el-radio label="不上传"></el-radio>
                     </el-radio-group>
-                </e-col>
-                <e-col :span="7">
                     <el-form-item label="备注">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.desc"></el-input>
                     </el-form-item>
-                </e-col>
-                <e-col :span="7">
                     <el-button type="primary" @click="onSubmit">提交</el-button>
-                </e-col>
+                </div>
+               
             </el-form-item>
             <el-form-item>
                 <el-button>关闭</el-button>
@@ -47,24 +57,15 @@ export default {
     data(){
         return {
           form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        }
+            desc: ''
+            },
+            imageUrl:[],
+            numCassfil:[]
         }
     },
-    created(){
-        
+     created(){
     },
     methods:{
-      onFaceRepeat(){
-            this.$router.push({name:'faceRepeat'})
-        },
         onSubmit(){
             console.log();
         }
@@ -77,5 +78,11 @@ export default {
 }
 .pagination{
   text-align: right;
+}
+/* /deep/ .el-input__inner{
+    border: 0;
+} */
+.classfil{
+    display: flex;
 }
 </style>
