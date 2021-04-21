@@ -16,7 +16,7 @@ const router = new Router({
         {
         name:'website',
         path:'website',
-        component: () => import(/* webpackChunkName: "TextAudit" */"@/views/website/Website.vue")
+        component: () => import(/* webpackChunkName: "TextAudit" */"@/views/website/Website.vue"),
       },{
         name:'policy',
         path:'policy',
