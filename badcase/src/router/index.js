@@ -1,14 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import Login from '@/components/login/login.vue'
+import { createRouter, createWebHistory } from "vue-router";
 import Home from '@/views/home/home.vue'
-import Files from '@/views/files/files.vue'
-import Website from '@/views/website/Website.vue'
-import Policy from '@/views/policy/Policy.vue'
-import AddWebsite from '@/views/website/AddWebsite.vue'
-import BaseUplode from '@/views/policy/baseUplode.vue'
-import FaceRepeat from '@/views/policy/faceRepeat.vue'
-
 Vue.use(Router)
 
 const router = new Router({
@@ -18,34 +12,35 @@ const router = new Router({
       path: '/',
       redirect: '/policy',
       component: Home,
-      children:[{
+      children:[
+        {
         name:'website',
         path:'website',
-        component:Website
+        component: () => import(/* webpackChunkName: "TextAudit" */"@/views/website/Website.vue")
       },{
         name:'policy',
         path:'policy',
-        component:Policy
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/Policy.vue')
       },
       {
         name:'baseUplode',
         path:'baseUplode',
-        component:BaseUplode
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/baseUplode.vue')
       },
       {
         name:'faceRepeat',
         path:'faceRepeat',
-        component:FaceRepeat
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/faceRepeat.vue')
       },
       {
         name:'addWebsite',
         path:'addWebsite',
-        component:AddWebsite,
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/AddWebsite.vue')
       },
       {
         name:'files',
         path: 'files',
-        component: Files
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/files.vue')
        
       },
     ]
