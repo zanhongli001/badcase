@@ -33,6 +33,11 @@ const router = new Router({
         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/faceRepeat.vue')
       },
       {
+        name:'dedailPage',
+        path:'dedailPage',
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/dedailPage.vue')
+      },
+      {
         name:'addWebsite',
         path:'addWebsite',
         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/AddWebsite.vue')

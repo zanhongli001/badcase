@@ -9,9 +9,12 @@ MyHttpSever.install = (Vue)=> {
     Vue.prototype.$http = axios
     axios.interceptors.request.use(config => {
       // NProgress.start()
-      // console.log(config)
+      if (localStorage.getItem('token')){
+        config.headers.Authorization = localStorage.getItem('token')
+        return config
+      }
       // 为请求头对象，添加token验证的Authorization字段
-      config.headers.Authorization = window.sessionStorage.getItem('token')
+    //   config.headers.Authorization = window.sessionStorage.getItem('token')
       // 在最后必须 return config
       return config
     })

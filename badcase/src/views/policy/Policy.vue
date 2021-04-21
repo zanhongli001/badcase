@@ -7,7 +7,7 @@
             </el-col>
             <el-col :span="10">
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">底库数据查询</el-button>
+                    <el-button type="primary">底库数据查询</el-button>
                     <el-button type="primary" @click="onUplode">上传底库数据</el-button>
                 </el-form-item>
             </el-col>
@@ -22,59 +22,50 @@
         style="width: 100%"
         :default-sort = "{prop: 'date', order: 'descending'}"
         >
-        <el-table-column
-        prop="date"
-        label="任务ID"
-        
-        width="180">
+        <el-table-column label="任务ID" width="100">
+            <template slot-scope="scope">
+                <div 
+                class="codeId"
+                @click="openDedail(scope.row.date)"
+                >
+                    {{scope.row.date}}
+                </div>
+            </template>
         </el-table-column>
         <el-table-column
         prop="name"
         label="类型"
-        sortable
-        width="180">
+        sortable>
         </el-table-column>
         <el-table-column
         prop="name"
-        label="描述"
-        
-        width="180">
+        label="描述">
         </el-table-column>
         <el-table-column
         prop="name"
         label="状态"
-        sortable
-        width="180">
+        sortable>
         </el-table-column>
         <el-table-column
         prop="name"
-        label="提交人"
-        
-        width="180">
+        label="提交人">
         </el-table-column>
         <el-table-column
         prop="name"
         label="审核人"
-        sortable
-        width="180">
+        sortable>
         </el-table-column>
         <el-table-column
         prop="name"
-        label="上传时间"
-        
-        width="180">
+        label="上传时间">
         </el-table-column>
         <el-table-column
         prop="name"
-        label="审核时间"
-        
-        width="180">
+        label="审核时间">
         </el-table-column>
         <el-table-column
         prop="name"
-        label="审核结果"
-        
-        width="180">
+        label="审核结果">
         </el-table-column>
         <el-table-column
         prop="address"
@@ -89,7 +80,8 @@
 export default {
     data(){
         return {
-           tableData: [{
+        params:{},
+        tableData: [{
           date: '2016-05-02',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄'
@@ -110,7 +102,6 @@ export default {
         }
     }, 
     created(){
-        this.getOrderList()
     },
     methods:{
         // 上传
@@ -120,15 +111,22 @@ export default {
         // 表格
         formatter(row, column) {
         return row.address;
-      }
-       
+      },
+    //    点击详情
+        openDedail(){
+            this.$router.push({name:'dedailPage'})
+        }
         
     }
 }
 </script>
 <style>
-.el-date-editor--datetimerange.el-input, .el-date-editor--datetimerange.el-input__inner{
-  width: 350px;
+.codeId{
+    white-space: nowrap;
+    color: #409EFF;
+}
+.codeId:hover{
+    cursor: pointer;
 }
 .pagination{
   text-align: right;
