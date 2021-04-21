@@ -33,38 +33,38 @@
             </template>
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="类型"
         sortable>
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="描述">
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="状态"
         sortable>
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="提交人">
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="审核人"
         sortable>
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="上传时间">
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="审核时间">
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="names"
         label="审核结果">
         </el-table-column>
         <el-table-column
@@ -83,19 +83,19 @@ export default {
         params:{},
         tableData: [{
           date: '2016-05-02',
-          name: '王小虎',
+          names: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄'
         }, {
           date: '2016-05-04',
-          name: '王小虎',
+          names: '王小虎',
           address: '上海市普陀区金沙江路 1517 弄'
         }, {
           date: '2016-05-01',
-          name: '王小虎',
+          names: '王小虎',
           address: '上海市普陀区金沙江路 1519 弄'
         }, {
           date: '2016-05-03',
-          name: '王小虎',
+          names: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
         }]
             
