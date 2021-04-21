@@ -59,6 +59,9 @@
 export default {
   data() {
     return {
+      params:{
+
+      },
       tableData: [
         {
           date: "2016-05-02",
@@ -101,6 +104,9 @@ export default {
         return "disabledCheck";
       }
     },
+    onSubmit(){
+
+    }
   },
 };
 </script>
