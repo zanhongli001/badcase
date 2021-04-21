@@ -25,7 +25,7 @@
         <el-table-column
         prop="date"
         label="任务ID"
-        sortable
+        
         width="180">
         </el-table-column>
         <el-table-column
@@ -37,7 +37,7 @@
         <el-table-column
         prop="name"
         label="描述"
-        sortable
+        
         width="180">
         </el-table-column>
         <el-table-column
@@ -49,7 +49,7 @@
         <el-table-column
         prop="name"
         label="提交人"
-        sortable
+        
         width="180">
         </el-table-column>
         <el-table-column
@@ -61,19 +61,19 @@
         <el-table-column
         prop="name"
         label="上传时间"
-        sortable
+        
         width="180">
         </el-table-column>
         <el-table-column
         prop="name"
         label="审核时间"
-        sortable
+        
         width="180">
         </el-table-column>
         <el-table-column
         prop="name"
         label="审核结果"
-        sortable
+        
         width="180">
         </el-table-column>
         <el-table-column
