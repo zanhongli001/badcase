@@ -41,6 +41,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary">查询</el-button>
+                <el-button type="primary" @click="clode">关闭</el-button>
             </el-form-item>
         </el-form>
         <el-table
@@ -124,6 +125,10 @@ export default {
         isShow(){
             this.isLogo = true;
             this.isFace = false;
+        },
+        // 关闭
+        clode(){
+            this.$router.push({name:"baseUplode"})
         }
     }
 }
