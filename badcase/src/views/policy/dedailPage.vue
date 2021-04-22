@@ -80,7 +80,7 @@ export default {
             console.log();
         },
         close(){
-            this.$router.push({name:'Policy'})
+            this.$router.push({name:'policy'})
         }
     }
 }
