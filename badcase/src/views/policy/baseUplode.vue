@@ -1,13 +1,13 @@
 <template>
     <div>
-        <h2>底库上传数据</h2>
+        <h2>上传底库数据</h2>
         <el-form ref="form" :model="form" label-width="80px">
             <el-col :span="16">
                 <el-form-item label="选择类型">
                     <el-select v-model="form.region" placeholder="人脸数据">
-                    <el-option label="人脸数据" value="shanghai"></el-option>
-                    <el-option label="声纹数据" value="beijing"></el-option>
-                    <el-option label="TV logo数据" value="beijing"></el-option>
+                        <el-option label="人脸数据" value="shanghai"></el-option>
+                        <el-option label="声纹数据" value="beijing"></el-option>
+                        <el-option label="TV logo数据" value="beijing"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="数据描述">
@@ -15,17 +15,15 @@
                 </el-form-item>
                 <el-form-item label="底库分类">
                     <el-form-item label="一级分类">
-                        <el-select v-model="form.region" placeholder="请选择活动区域">
-                            <el-option label="政治有害" value="shanghai"></el-option>
-                            <el-option label="其他" value="beijing"></el-option>
+                        <el-select v-model="form.region" placeholder="请选择分类">
+                            <el-option :label="options.name" :value="options.name" v-for="(options,i) in list" :key="i"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-form-item>
                  <el-form-item label="">
                         <el-form-item label="二级分类">
-                            <el-select v-model="form.region" placeholder="请选择活动区域">
-                                <el-option label="政治有害" value="shanghai"></el-option>
-                                <el-option label="其他" value="beijing"></el-option>
+                            <el-select v-model="form.region" placeholder="请选择分类">
+                                <el-option :label="options.name" :value="options.name" v-for="(options,i) in list" :key="i"></el-option>
                             </el-select>
                         </el-form-item>
                 </el-form-item>
@@ -106,6 +104,10 @@ export default {
                 resource: '',
                 desc: ''
             },
+            list: [
+                {name:"人脸识别"},
+                {name:"暴恐场景识别"},
+            ],
             dialogImageUrl:[]
         }
     },

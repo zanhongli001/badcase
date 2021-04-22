@@ -14,15 +14,13 @@
                     <el-input v-model="form.names"></el-input>
                 </el-form-item>
                 <el-form-item label="一级分类">
-                    <el-select v-model="form.region" placeholder="请选择活动区域">
-                        <el-option label="政治有害" value="shanghai"></el-option>
-                        <el-option label="其他" value="beijing"></el-option>
+                    <el-select v-model="form.region" placeholder="请选择分类">
+                        <el-option :label="options.name" :value="options.name" v-for="(options,i) in list" :key="i"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="二级分类">
-                    <el-select v-model="form.region" placeholder="请选择活动区域">
-                        <el-option label="政治有害" value="shanghai"></el-option>
-                        <el-option label="其他" value="beijing"></el-option>
+                    <el-select v-model="form.region" placeholder="请选择分类">
+                        <el-option :label="options.name" :value="options.name" v-for="(options,i) in list" :key="i"></el-option>
                     </el-select>
                 </el-form-item>
             </div>
@@ -64,7 +62,8 @@
             width="100">
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                <el-button type="text" size="small">编辑</el-button>
+                <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+                <el-button @click="handleClick(scope.row)" type="text" size="small">更改</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -86,6 +85,10 @@ export default {
                 resource: '',
                 desc: ''
             },
+             list: [
+                {name:"人脸识别"},
+                {name:"暴恐场景识别"},
+            ],
             tableData: [{
             date: '2016-05-02',
             name: '王小虎',
@@ -118,7 +121,9 @@ export default {
             this.isLogo = true;
             this.isFace = false;
         },
-        
+        handleClick(id){
+            console.log(id)
+        }
     }
 }
 </script>
