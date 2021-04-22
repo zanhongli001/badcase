@@ -1,7 +1,7 @@
 <template>
     <div class="comenten">
         <div class="lt-comenten">
-            <h2>详情</h2>
+            <h2>底库数据详情</h2>
             <p>
                 <span>任务ID</span>
                 <span>D2021040804</span>

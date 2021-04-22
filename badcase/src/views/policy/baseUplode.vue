@@ -69,7 +69,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="delite">取消</el-button>
-                    <el-button type="primary">上传</el-button>
+                    <el-button type="primary" @click="handUplode()">上传</el-button>
                 </el-form-item>
             </el-col>
         </el-form>
@@ -132,9 +132,13 @@ export default {
         //   file.raw.splice(0,1)
         },
         handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
+            this.dialogImageUrl = file.url;
+            this.dialogVisible = true;
         },
+        // 上传
+        handUplode(){
+            console.log(1)
+        }
     }
 }
 </script>
