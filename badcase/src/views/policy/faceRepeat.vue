@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>人脸排重</h2>
+        <!-- <h2>人脸排重</h2> -->
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="选择类型" >
                 <el-select v-model="form.region" placeholder="人脸数据">
@@ -9,39 +9,31 @@
                     <el-option label="TV logo数据" value="jilin" @click.native="isShow"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item v-if="isFace">
-                <el-col :span="7">
-                    <el-form-item label="活动名称">
-                        <el-input v-model="form.names"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="7">
-                    <el-form-item label="一级分类">
-                        <el-select v-model="form.region" placeholder="请选择活动区域">
-                            <el-option label="政治有害" value="shanghai"></el-option>
-                            <el-option label="其他" value="beijing"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    
-                </el-col>
-                <el-col :span="7">
-                    <el-form-item label="二级分类">
-                        <el-select v-model="form.region" placeholder="请选择活动区域">
-                            <el-option label="政治有害" value="shanghai"></el-option>
-                            <el-option label="其他" value="beijing"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-form-item>
-            <el-form-item v-if="isLogo">
-                    <el-form-item label="logo">
-                        <el-input v-model="form.names"></el-input>
-                    </el-form-item>
-                
-            </el-form-item>
+            <div style="display:flex" v-if="isFace">
+                <el-form-item label="人名">
+                    <el-input v-model="form.names"></el-input>
+                </el-form-item>
+                <el-form-item label="一级分类">
+                    <el-select v-model="form.region" placeholder="请选择活动区域">
+                        <el-option label="政治有害" value="shanghai"></el-option>
+                        <el-option label="其他" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="二级分类">
+                    <el-select v-model="form.region" placeholder="请选择活动区域">
+                        <el-option label="政治有害" value="shanghai"></el-option>
+                        <el-option label="其他" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+            </div>
+           
+            <div v-if="isLogo" style="width:30%">
+                <el-form-item label="logo">
+                    <el-input v-model="form.names"></el-input>
+                </el-form-item>
+            </div>
             <el-form-item>
                 <el-button type="primary">查询</el-button>
-                <el-button type="primary" @click="clode">关闭</el-button>
             </el-form-item>
         </el-form>
         <el-table
@@ -126,10 +118,7 @@ export default {
             this.isLogo = true;
             this.isFace = false;
         },
-        // 关闭
-        clode(){
-            this.$router.push({name:"baseUplode"})
-        }
+        
     }
 }
 </script>

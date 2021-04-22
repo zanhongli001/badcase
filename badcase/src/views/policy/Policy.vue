@@ -7,7 +7,7 @@
             </el-col>
             <el-col :span="10">
                 <el-form-item>
-                    <el-button type="primary">底库数据查询</el-button>
+                    <el-button type="primary" @click="dialogVisible = true">底库数据查询</el-button>
                     <el-button type="primary" @click="onUplode">上传底库数据</el-button>
                 </el-form-item>
             </el-col>
@@ -73,11 +73,25 @@
         :formatter="formatter">
         </el-table-column>
     </el-table>
+    <!-- 弹框 -->
+    <el-dialog
+    title="查询底库数据"
+    :visible.sync="dialogVisible"
+    width="80%"
+    :before-close="handleClose">
+        <face-repeat></face-repeat>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+    </el-dialog>
 </div>
     
 </template>
 <script>
+import faceRepeat from './faceRepeat.vue';
 export default {
+	components: { faceRepeat },
     data(){
         return {
         params:{},
@@ -97,7 +111,8 @@ export default {
           date: '2016-05-03',
           names: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
-        }]
+        }],
+        dialogVisible: false,
             
         }
     }, 
@@ -115,7 +130,15 @@ export default {
     //    点击详情
         openDedail(){
             this.$router.push({name:'dedailPage'})
-        }
+        },
+        // 弹框
+        handleClose(done) {
+            this.$confirm('确认关闭？')
+            .then(_ => {
+                done();
+            })
+            .catch(_ => {});
+        },
         
     }
 }

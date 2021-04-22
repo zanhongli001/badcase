@@ -35,7 +35,7 @@
                             </el-col>
                             <el-col :span="5">
                                 <el-form-item>
-                                    <el-button type="primary" @click="onFaceRepeat">人脸排重</el-button>
+                                    <el-button type="primary" @click="dialogVisible = true">人脸排重</el-button>
                                 </el-form-item>
                             </el-col>
                         </el-form-item>
@@ -45,35 +45,55 @@
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">上传</el-button>
                     <el-button @click="delite">取消</el-button>
+                    <el-button type="primary">上传</el-button>
                 </el-form-item>
             </el-col>
         </el-form>
+         <!-- 弹框 -->
+        <el-dialog
+        title="查询底库数据"
+        :visible.sync="dialogVisible"
+        width="80%"
+        :before-close="handleClose">
+            <face-repeat></face-repeat>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
+import faceRepeat from './faceRepeat.vue';
 export default {
+	components: { faceRepeat },
     data(){
         return {
-          form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        }
+            dialogVisible:false,
+            form: {
+                name: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            }
         }
     },
     created(){
         
     },
     methods:{
-      onFaceRepeat(){
-            this.$router.push({name:'faceRepeat'})
+       // 弹框
+        handleClose(done) {
+            this.$confirm('确认关闭？')
+            .then(_ => {
+                done();
+            })
+            .catch(_ => {});
         },
         // 取消
         delite(){
