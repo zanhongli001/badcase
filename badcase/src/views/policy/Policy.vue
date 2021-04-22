@@ -7,7 +7,7 @@
             </el-col>
             <el-col :span="10">
                 <el-form-item>
-                    <el-button type="primary">底库数据查询</el-button>
+                    <el-button type="primary" @click="handSearch">底库数据查询</el-button>
                     <el-button type="primary" @click="onUplode">上传底库数据</el-button>
                 </el-form-item>
             </el-col>
@@ -115,6 +115,9 @@ export default {
     //    点击详情
         openDedail(){
             this.$router.push({name:'dedailPage'})
+        },
+        handSearch(){
+            this.$router.push({name:'faceRepeat'})
         }
         
     }
