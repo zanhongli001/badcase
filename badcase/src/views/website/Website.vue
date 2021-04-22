@@ -143,7 +143,7 @@ export default {
 }
 
 .el-table .disabledCheck .cell::before {
-  content: "选择";
+  content: "筛选";
 
   text-align: center;
 
@@ -172,6 +172,10 @@ export default {
   height: 50px;
   display: flex;
   justify-content: space-around;
+}
+.tab p{
+
+cursor:pointer;
 }
 .active{
   color: #409EFF;

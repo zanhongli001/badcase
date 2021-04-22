@@ -58,7 +58,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">上传</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="close">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -117,6 +117,9 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+     close(){
+            this.$router.push({ name: "website" });
+        }     
   },
 };   
 </script>
