@@ -24,7 +24,7 @@
       </el-form-item>
 
       <el-form-item label="问题描述">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.name" style="width:300px"></el-input>
       </el-form-item>
       <el-form-item label="选择图片">
         <el-upload action="#" list-type="picture-card" :auto-upload="false" multiple >
