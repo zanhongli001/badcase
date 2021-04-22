@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <h2>详情</h2>
-        <div>
+    <div class="comenten">
+        <div class="lt-comenten">
+            <h2>详情</h2>
             <p>
                 <span>任务ID</span>
                 <span>D2021040804</span>
@@ -32,22 +32,32 @@
                 <span>仅审核人员权限看到审核操作这个板块</span>
             </p>
         </div>
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" :model="form" label-width="60px">
             <el-form-item>
                 <div class="classfil">
-                    <el-radio-group v-model="form.desc">
-                        <el-radio label="上传底库"></el-radio>
-                        <el-radio label="不上传"></el-radio>
-                    </el-radio-group>
+               <el-form-item>
+                         <el-radio-group v-model="form.desc">
+                            <el-radio label="上传底库"></el-radio>
+                            <el-radio label="不上传"></el-radio>
+                        </el-radio-group>
+                     </el-form-item>
                     <el-form-item label="备注">
                         <el-input v-model="form.desc"></el-input>
                     </el-form-item>
-                    <el-button type="primary" @click="onSubmit">提交</el-button>
+                    <el-form-item style="padding-left:10px">
+                        <el-button type="primary" @click="onSubmit">提交</el-button>
+                    </el-form-item>
                 </div>
                
             </el-form-item>
             <el-form-item>
-                <el-button>关闭</el-button>
+                <el-button @click="close">关闭</el-button>
+            </el-form-item>
+        </el-form>
+         <el-form ref="form" :model="form" label-width="80px">
+            
+            <el-form-item>
+               
             </el-form-item>
         </el-form>
     </div>
@@ -68,6 +78,9 @@ export default {
     methods:{
         onSubmit(){
             console.log();
+        },
+        close(){
+            this.$router.push({name:'Policy'})
         }
     }
 }
@@ -84,5 +97,19 @@ export default {
 } */
 .classfil{
     display: flex;
+    width: 100%;
+}
+.comenten{
+    vertical-align: middle;
+    float: left;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.lt-comenten{
+    padding-left:60px ;
 }
 </style>
