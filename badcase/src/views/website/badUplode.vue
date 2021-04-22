@@ -19,16 +19,23 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="know">
-        <el-radio v-model="radio2" label="3">现有模型漏识别</el-radio>
-        <el-radio v-model="radio2" label="4">新需求</el-radio>
+        <el-radio v-model="radio2" label="现有模型漏识别"></el-radio>
+        <el-radio v-model="radio2" label="新需求"></el-radio>
       </el-form-item>
 
       <el-form-item label="问题描述">
-        <el-input v-model="form.name" style="width:300px"></el-input>
+        <el-input v-model="form.name" style="width: 300px"></el-input>
       </el-form-item>
       <el-form-item label="选择图片">
-        <el-upload action="#" list-type="picture-card" :auto-upload="false" multiple >
-          <i  slot="default" class="el-icon-plus"></i>
+        <el-upload
+          action="#"
+          list-type="picture-card"
+          :auto-upload="false"
+          multiple
+          :on-change="handleChange"
+          accept=".jpg, .jpeg, .png"
+        >
+          <i slot="default" class="el-icon-plus"></i>
           <div class="upImg" slot="file" slot-scope="{ file }">
             <img
               class="el-upload-list__item-thumbnail"
@@ -83,7 +90,7 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       disabled: false,
-      multiple:true,
+      multiple: true,
       list: [
         "人脸识别",
         "暴恐场景识别",
@@ -109,48 +116,57 @@ export default {
     hide() {
       this.know = false;
     },
-    handleRemove(file,fileList) {
-      console.log(file,fileList);
-    //   file.raw.splice(0,1)
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+      //   file.raw.splice(0,1)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-     close(){
-            this.$router.push({ name: "website" });
-        }     
+    close() {
+      this.$router.push({ name: "website" });
+    },
+    handleChange(file) {
+      const isTypeTrue = /^image\/(jpeg|png|jpg)$/.test(file.raw.type);
+      const isLt300K = file.size / 1024 / 1024 < 15;
+      if (!isLt300K) {
+        this.$message.error("上传图片大小不能超过5mb!");
+        return false;
+      }
+      if (!isTypeTrue) {
+        this.$message.error("上传图片格式不对!");
+        return false;
+      }
+    },
   },
-};   
+};
 </script>
 <style>
-
-
 .addTitle {
   margin-bottom: 20px;
 }
 .pagination {
   text-align: right;
 }
-.el-upload--picture-card{
-    width: 90px;
-    height: 50px;
-    position: relative;
+.el-upload--picture-card {
+  width: 90px;
+  height: 50px;
+  position: relative;
 }
-.el-upload-list--picture-card .el-upload-list__item{
-    width: 90px;
-    height: 50px;
+.el-upload-list--picture-card .el-upload-list__item {
+  width: 90px;
+  height: 50px;
 }
-.upImg{
-    width: 90px;
-    height: 50px;
+.upImg {
+  width: 90px;
+  height: 50px;
 }
-.el-icon-plus{
-text-align: center;
-vertical-align: middle;
-position: absolute;
-left: 33%;
-top: 26%;
+.el-icon-plus {
+  text-align: center;
+  vertical-align: middle;
+  position: absolute;
+  left: 33%;
+  top: 26%;
 }
-
 </style>
