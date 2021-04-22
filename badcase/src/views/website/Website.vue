@@ -13,8 +13,8 @@
         </el-col>
         <el-col :span="10">
           <el-form-item>
-            <el-button type="primary" @click="onSubmit"
-              >查看筛选的图片</el-button
+            <el-button type="primary" @click="allImg() "
+              >批量查看图片</el-button
             >
             <el-button type="primary" @click="onUplode">上传badcase</el-button>
           </el-form-item>
@@ -65,6 +65,23 @@
        <el-table-column prop="name" label="是否已解决" sortable width="130">
       </el-table-column>
     </el-table>
+    <!-- 弹框 -->
+    <el-dialog
+  title="查看图片"
+  :visible.sync="dialogVisible"
+  width="50%"
+  :before-close="handleClose">
+ <el-image class="el-img"
+      style="width: 100px; height: 100px"
+      v-for="(itemImg,ind) in imgUrl " :key="ind"
+      :src="itemImg"
+      lazy
+      ></el-image>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 <script>
@@ -73,6 +90,8 @@ export default {
     return {
        addAll:'active',
        myCreat:'',
+       dialogVisible: false,
+       imgUrl:['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'],
       params:{
 
       },
@@ -108,7 +127,9 @@ export default {
   methods: {
     // 上传
     onUplode() {
+     
       this.$router.push({ name: "badUplode" });
+      let index= this.$route.path.replace('/','')
     },
     // 表格
     formatter(row, column) {
@@ -133,7 +154,18 @@ export default {
          creatList(){
         this.myCreat = 'active'
         this.addAll = ''
-        }
+        },
+        allImg(){
+          this.dialogVisible = true
+        },
+        // 关闭弹窗
+          handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      }
   },
 };
 </script>
@@ -179,5 +211,8 @@ cursor:pointer;
 }
 .active{
   color: #409EFF;
+}
+.el-img{
+  margin-left: 10px;
 }
 </style>

@@ -93,7 +93,22 @@ export default {
     },
     	computed: {
 			onRoutes() {
+                let index = this.$route.path.replace('/','');
+                 if (index == 'badUplode') {
+                  return 'website'
+               }
+                if (index == 'badDetails') {
+                  return 'website'
+               }
+               if (index == 'dedailPage') {
+                  return 'policy'
+               }
+                if (index == 'baseUplode') {
+                  return 'policy'
+               }
+               
 				return this.$route.path.replace('/', '');
+                
 			},
 		},
 }

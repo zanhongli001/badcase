@@ -24,7 +24,7 @@
       </el-form-item>
 
       <el-form-item label="问题描述">
-        <el-input v-model="form.name" style="width: 300px"></el-input>
+        <el-input type="textarea" v-model="form.name" style="width: 300px"></el-input>
       </el-form-item>
       <el-form-item label="选择图片">
         <el-upload
@@ -64,8 +64,8 @@
         </el-dialog>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">上传</el-button>
         <el-button @click="close">取消</el-button>
+          <el-button type="primary" @click="onSubmit">提交</el-button>
       </el-form-item>
     </el-form>
   </div>
