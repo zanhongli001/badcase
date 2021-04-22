@@ -54,6 +54,12 @@ const router = new Router({
         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badUplode')
        
       },
+      {
+        name:'badDetails',
+        path: 'badDetails',
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badDetails')
+       
+      },
     ]
     },
     // {

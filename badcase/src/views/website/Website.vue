@@ -21,6 +21,10 @@
         </el-col>
       </el-row>
     </el-form>
+    <div class="tab">
+      <p :class="addAll" @click="all">全部</p>
+      <p :class="myCreat" @click="creatList">我创建的</p>
+    </div>
     <!-- 表格 -->
     <el-table
       :header-cell-class-name="cellClass"
@@ -32,6 +36,14 @@
       >
       <el-table-column type="selection" width="50"> </el-table-column>
       <el-table-column prop="date" label="任务ID" width="180">
+          <template slot-scope="scope">
+                <div 
+                class="codeId"
+                @click="openDedail(scope.row.date)"
+                >
+                    {{scope.row.date}}
+                </div>
+            </template>
       </el-table-column>
       <el-table-column prop="name" label="场景分类" sortable width="120">
       </el-table-column>
@@ -59,6 +71,8 @@
 export default {
   data() {
     return {
+       addAll:'active',
+       myCreat:'',
       params:{
 
       },
@@ -84,6 +98,7 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄",
         },
       ],
+     
     };
   },
   created() {
@@ -106,7 +121,19 @@ export default {
     },
     onSubmit(){
 
-    }
+    },
+     //    点击详情
+        openDedail(){
+            this.$router.push({name:'badDetails'})
+        },
+        all(){
+        this.addAll = 'active'
+         this.myCreat = ''
+        },
+         creatList(){
+        this.myCreat = 'active'
+        this.addAll = ''
+        }
   },
 };
 </script>
@@ -129,5 +156,24 @@ export default {
 }
 .pagination {
   text-align: right;
+}
+.codeId{
+    white-space: nowrap;
+    color: #409EFF;
+}
+.codeId:hover{
+    cursor: pointer;
+}
+.pagination{
+  text-align: right;
+}
+.tab{
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+}
+.active{
+  color: #409EFF;
 }
 </style>
