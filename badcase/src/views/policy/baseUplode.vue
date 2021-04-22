@@ -14,35 +14,60 @@
                     <el-input type="textarea" v-model="form.desc"></el-input>
                 </el-form-item>
                 <el-form-item label="底库分类">
-                    <el-col :span="22">
-                        <el-form-item label="一级分类">
-                            <el-select v-model="form.region" placeholder="请选择活动区域">
-                                <el-option label="政治有害" value="shanghai"></el-option>
-                                <el-option label="其他" value="beijing"></el-option>
-                            </el-select>
-                        </el-form-item>
+                    <el-form-item label="一级分类">
+                        <el-select v-model="form.region" placeholder="请选择活动区域">
+                            <el-option label="政治有害" value="shanghai"></el-option>
+                            <el-option label="其他" value="beijing"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form-item>
+                 <el-form-item label="">
                         <el-form-item label="二级分类">
                             <el-select v-model="form.region" placeholder="请选择活动区域">
                                 <el-option label="政治有害" value="shanghai"></el-option>
                                 <el-option label="其他" value="beijing"></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item>
-                            <el-col :span="15">
-                                <el-form-item label="人名">
-                                    <el-input v-model="form.name"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="5">
-                                <el-form-item>
-                                    <el-button type="primary" @click="dialogVisible = true">人脸排重</el-button>
-                                </el-form-item>
-                            </el-col>
-                        </el-form-item>
-                    </el-col>
                 </el-form-item>
-                <el-form-item label="活动名称">
-                    <el-input v-model="form.name"></el-input>
+                 <el-form-item >
+                     <div style="display:flex">
+                        <el-form-item label="人名">
+                            <el-input v-model="form.name"></el-input>
+                        </el-form-item>
+                        <el-form-item class="faceBtn">
+                            <el-button type="primary" @click="dialogVisible = true">人脸排重</el-button>
+                        </el-form-item>
+                     </div>     
+                </el-form-item>
+                <el-form-item label="选择文件">
+                    <el-upload action="#" list-type="picture-card" :auto-upload="false" multiple >
+                    <i  slot="default" class="el-icon-plus"></i>
+                    <div class="upImg" slot="file" slot-scope="{ file }">
+                        <img
+                        class="el-upload-list__item-thumbnail"
+                        :src="file.url"
+                        alt=""
+                        />
+                        <!-- <span class="el-upload-list__item-actions">
+                        <span
+                            class="el-upload-list__item-preview"
+                            @click="handlePictureCardPreview(file)"
+                        >
+                            <i class="el-icon-zoom-in"></i>
+                        </span>
+                        <span
+                            v-if="!disabled"
+                            class="el-upload-list__item-delete"
+                            @click="handleRemove(file)"
+                        >
+                            <i class="el-icon-delete"></i>
+                        </span> -->
+                        <!-- </span> -->
+                    </div>
+                    </el-upload>
+                    <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt="" />
+                    </el-dialog>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="delite">取消</el-button>
@@ -80,7 +105,8 @@ export default {
                 type: [],
                 resource: '',
                 desc: ''
-            }
+            },
+            dialogImageUrl:[]
         }
     },
     created(){
@@ -98,7 +124,15 @@ export default {
         // 取消
         delite(){
             this.$router.push({name:"policy"})
-        }
+        },
+        handleRemove(file,fileList) {
+        console.log(file,fileList);
+        //   file.raw.splice(0,1)
+        },
+        handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+        },
     }
 }
 </script>
@@ -109,4 +143,12 @@ export default {
 .pagination{
   text-align: right;
 }
+.faceBtn{
+    padding-left: 10px;
+}
+/* 
+/deep/.el-upload-list__item{
+     width: 80px;
+    height: 80px;
+} */
 </style>
