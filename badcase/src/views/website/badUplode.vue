@@ -19,7 +19,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="know">
-           <el-radio-group v-model="form.feedback_type">
+           <el-radio-group v-model="form.feedback_two_type">
         <el-radio v-model="radio2" label="现有模型漏识别"></el-radio>
         <el-radio v-model="radio2" label="新需求"></el-radio>
     </el-radio-group>
@@ -79,6 +79,7 @@ export default {
       form: {
         name: "",
         feedback_type:"",
+        feedback_two_type:"",
         feedback_description:"",
         feedback_image:"",
         scene_classify: "",

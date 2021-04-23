@@ -33,7 +33,7 @@
         <el-form ref="form" :model="form" label-width="60px">
             <el-form-item>
                 <div class="classfil">
-               <el-checkbox v-model="checked">已分析处理</el-checkbox>
+               <el-checkbox v-model="form.checked">已分析处理</el-checkbox>
                     <el-form-item label="备注：">
                         <el-input v-model="form.desc"></el-input>
                     </el-form-item>
@@ -53,14 +53,16 @@ export default {
     data(){
         return {
           form: {
-            desc: ''
+            desc: '',
+            is_handle:false,
             },
-           checked:false,
+           
             imageUrl:[],
             numCassfil:[]
         }
     },
-     created(){
+     beforeUpdate(){
+         console.log(this.form)
     },
     methods:{
         onSubmit(){

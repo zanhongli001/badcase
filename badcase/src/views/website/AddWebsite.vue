@@ -95,9 +95,9 @@ export default {
                 pagenum :1,
           };
           try{
-            let res = await this.$http.get('orders',{
-              params : params
-            });
+    //         let res = await this.$http.get('orders',{
+    //           params : params
+    //         });
             if(res.meta.status == 200){
                 res.data.data.goods.forEach(item=>{
                   if(item.order_id===order_id){

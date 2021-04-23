@@ -13,9 +13,7 @@
         </el-col>
         <el-col :span="10">
           <el-form-item>
-            <el-button type="primary" @click="allImg() "
-              >批量查看图片</el-button
-            >
+            <el-button type="primary" @click="allImg()">批量查看图片</el-button>
             <el-button type="primary" @click="onUplode">上传badcase</el-button>
           </el-form-item>
         </el-col>
@@ -31,105 +29,146 @@
       :data="tableData"
       border
       style="width: 100%"
-      :default-sort="{ prop: 'date', order: 'descending' }"
+      :default-sort="{ prop: 'tableData', order: 'descending' }"
+       @selection-change="handleEdit "
     >
       >
-      <el-table-column type="selection" width="50"> </el-table-column>
-      <el-table-column prop="date" label="任务ID" width="180">
-          <template slot-scope="scope">
-                <div 
-                class="codeId"
-                @click="openDedail(scope.row.date)"
-                >
-                    {{scope.row.date}}
-                </div>
-            </template>
+      <el-table-column prop="task_id" type="selection" width="50"> </el-table-column>
+      <el-table-column prop="task_id" label="任务ID" width="180">
+        <template slot-scope="scope">
+          <div class="codeId" @click="openDedail(scope.row.task_id)">
+            {{ scope.row.task_id }}
+          </div>
+        </template>
       </el-table-column>
-      <el-table-column prop="name" label="场景分类" sortable width="120">
+      <el-table-column
+        prop="scene_classify"
+        label="场景分类"
+        sortable
+        width="120"
+      >
       </el-table-column>
-      <el-table-column prop="name" label="问题类型" width="80"> </el-table-column>
-      <el-table-column prop="name" label="描述" sortable width="180">
+      <el-table-column prop="feedback_type" label="问题类型" width="80">
       </el-table-column>
-      <el-table-column prop="name" label="状态" width="70">
+      <el-table-column
+        prop="feedback_description"
+        label="描述"
+        sortable
+        width="180"
+      >
       </el-table-column>
-      <el-table-column prop="name" label="提交人" sortable width="90">
+      <el-table-column prop="status" label="状态" width="70"> </el-table-column>
+      <el-table-column prop="submitter" label="提交人" sortable width="90">
       </el-table-column>
-      <el-table-column prop="name" label="处理人" sortable width="90">
+      <el-table-column prop="auditor" label="处理人" sortable width="90">
       </el-table-column>
-      <el-table-column prop="name" label="上传时间" width="180">
+      <el-table-column prop="upload_time" label="上传时间" width="180">
       </el-table-column>
-      <el-table-column prop="name" label="处理时间" width="180">
+      <el-table-column prop="handle_time" label="处理时间" width="180">
       </el-table-column>
-      <el-table-column prop="address" label="备注" width="180" :formatter="formatter">
+      <el-table-column
+        prop="comment"
+        label="备注"
+        width="180"
+        :formatter="formatter"
+      >
       </el-table-column>
-       <el-table-column prop="name" label="是否已解决" sortable width="130">
+      <el-table-column
+        prop="handle_result"
+        label="是否已解决"
+        sortable
+        width="130"
+      >
       </el-table-column>
     </el-table>
     <!-- 弹框 -->
     <el-dialog
-  title="查看图片"
-  :visible.sync="dialogVisible"
-  width="50%"
-  :before-close="handleClose">
- <el-image class="el-img"
-      style="width: 100px; height: 100px"
-      v-for="(itemImg,ind) in imgUrl " :key="ind"
-      :src="itemImg"
-      lazy
+      title="查看图片"
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose"
+    >
+      <el-image
+        class="el-img"
+        style="width: 100px; height: 100px"
+        v-for="(itemImg, ind) in imgUrl"
+        :key="ind"
+        :src="itemImg"
+        lazy
       ></el-image>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
-</el-dialog>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
+import request from "../../plugins/request";
 export default {
   data() {
     return {
-       addAll:'active',
-       myCreat:'',
-       dialogVisible: false,
-       imgUrl:['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'],
-      params:{
-
-      },
+      addAll: "active",
+      myCreat: "",
+      dialogVisible: false,
+      imgUrl: [
+        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      ],
+      params: {},
+      itemId:[],
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
+          task_id: "111",
+          scene_classify: "人脸识别",
+          feedback_type: "漏识别",
+          feedback_description: "石涛人脸漏识别",
+          status: 0,
+          submitter: "张三",
+          auditor: "王五",
+          upload_time: 1619079871,
+          handle_time: 1619079934,
+          handle_result: "未解决",
+          comment: "",
         },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
+         {
+          task_id: "222",
+          scene_classify: "人脸识别",
+          feedback_type: "漏识别",
+          feedback_description: "石涛人脸漏识别",
+          status: 1,
+          submitter: "张三",
+          auditor: "王五",
+          upload_time: 1619079871,
+          handle_time: 1619079934,
+          handle_result: "未解决",
+          comment: "",
         },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
+         {
+          task_id: "333",
+          scene_classify: "人脸识别",
+          feedback_type: "漏识别",
+          feedback_description: "石涛人脸漏识别",
+          status: 0,
+          submitter: "张三",
+          auditor: "王五",
+          upload_time: 1619079871,
+          handle_time: 1619079934,
+          handle_result: "未解决",
+          comment: "",
         },
       ],
-     
     };
   },
   created() {
-    // this.getOrderList()
+    this.getList();
   },
 
   methods: {
     // 上传
     onUplode() {
-     
       this.$router.push({ name: "badUplode" });
-      let index= this.$route.path.replace('/','')
     },
     // 表格
     formatter(row, column) {
@@ -140,32 +179,51 @@ export default {
         return "disabledCheck";
       }
     },
-    onSubmit(){
-
+    //    点击详情
+    openDedail(id) {
+      console.log(id)
+      this.$router.push({ name: "badDetails" });
     },
-     //    点击详情
-        openDedail(){
-            this.$router.push({name:'badDetails'})
-        },
-        all(){
-        this.addAll = 'active'
-         this.myCreat = ''
-        },
-         creatList(){
-        this.myCreat = 'active'
-        this.addAll = ''
-        },
-        allImg(){
-          this.dialogVisible = true
-        },
-        // 关闭弹窗
-          handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      }
+    all() {
+      this.addAll = "active";
+      this.myCreat = "";
+    },
+    creatList() {
+      this.myCreat = "active";
+      this.addAll = "";
+    },
+    // 查看图片
+    allImg() {
+      this.dialogVisible = true;
+    },
+    // 关闭弹窗
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
+    async getList() {
+      const loading = this.$loading({
+        lock: true,
+      });
+      request.fetchGet("/search/hot/detail").then((res) => {
+        console.log(res);
+      });
+      loading.close();
+    },
+  //  选中当前的内容
+    handleEdit (row) {  
+      //  console.log(row)
+this.itemId = row
+console.log(this.itemId)
+let item = this.itemId
+console.log(item)
+for(let i =0; i<item.length; i++){
+  console.log(item[i].task_id)
+}
+  }, 
   },
 };
 </script>
@@ -189,30 +247,29 @@ export default {
 .pagination {
   text-align: right;
 }
-.codeId{
-    white-space: nowrap;
-    color: #409EFF;
+.codeId {
+  white-space: nowrap;
+  color: #409eff;
 }
-.codeId:hover{
-    cursor: pointer;
+.codeId:hover {
+  cursor: pointer;
 }
-.pagination{
+.pagination {
   text-align: right;
 }
-.tab{
+.tab {
   width: 200px;
   height: 50px;
   display: flex;
   justify-content: space-around;
 }
-.tab p{
-
-cursor:pointer;
+.tab p {
+  cursor: pointer;
 }
-.active{
-  color: #409EFF;
+.active {
+  color: #409eff;
 }
-.el-img{
+.el-img {
   margin-left: 10px;
 }
 </style>
