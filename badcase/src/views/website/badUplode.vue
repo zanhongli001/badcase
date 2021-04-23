@@ -3,7 +3,7 @@
     <h2>新建badcase</h2>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="场景分类">
-        <el-select v-model="form.region" placeholder="人脸数据">
+        <el-select v-model="form.scene_classify" placeholder="人脸数据">
           <el-option
             v-for="(item, ind) in list"
             :key="ind"
@@ -13,18 +13,20 @@
         </el-select>
       </el-form-item>
       <el-form-item label="问题类型">
-        <el-radio-group v-model="radio">
-          <el-radio :label="3" @change="show">漏识别</el-radio>
-          <el-radio :label="6" @change="hide">误识别</el-radio>
+        <el-radio-group v-model="form.feedback_type">
+          <el-radio v-model="radio" label="漏识别" @change="show">漏识别</el-radio>
+          <el-radio v-model="radio" label="误识别" @change="hide">误识别</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="know">
+           <el-radio-group v-model="form.feedback_type">
         <el-radio v-model="radio2" label="现有模型漏识别"></el-radio>
         <el-radio v-model="radio2" label="新需求"></el-radio>
-      </el-form-item>
+    </el-radio-group>
+   </el-form-item>
 
       <el-form-item label="问题描述">
-        <el-input type="textarea" v-model="form.name" style="width: 300px"></el-input>
+        <el-input type="textarea" v-model="form.feedback_description" style="width: 300px"></el-input>
       </el-form-item>
       <el-form-item label="选择图片">
         <el-upload
@@ -76,13 +78,10 @@ export default {
     return {
       form: {
         name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
+        feedback_type:"",
+        feedback_description:"",
+        feedback_image:"",
+        scene_classify: "",
       },
       radio: "1",
       radio2: "2",
@@ -105,6 +104,9 @@ export default {
     };
   },
   created() {},
+  beforeUpdate(){
+console.log(this.form)
+  },
   methods: {
     onFaceRepeat() {
       this.$router.push({ name: "faceRepeat" });

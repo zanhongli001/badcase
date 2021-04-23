@@ -3,23 +3,23 @@
         <!-- <h2>人脸排重</h2> -->
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="选择类型" >
-                <el-select v-model="form.region" placeholder="人脸数据">
-                    <el-option label="人脸数据" value="shanghai" @click.native="isHide"></el-option>
-                    <el-option label="声纹数据" value="beijing" @click.native="isHide"></el-option>
-                    <el-option label="TV logo数据" value="jilin" @click.native="isShow"></el-option>
+                <el-select v-model="form.ai_type" placeholder="人脸数据">
+                    <el-option label="人脸数据" value="人脸数据" @click.native="isHide"></el-option>
+                    <el-option label="声纹数据" value="声纹数据" @click.native="isHide"></el-option>
+                    <el-option label="TV logo数据" value="TV logo数据" @click.native="isShow"></el-option>
                 </el-select>
             </el-form-item>
             <div style="display:flex" v-if="isFace">
                 <el-form-item label="人名">
-                    <el-input v-model="form.names"></el-input>
+                    <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="一级分类">
-                    <el-select v-model="form.region" placeholder="请选择分类">
+                    <el-select v-model="form.primary_classify" placeholder="请选择分类">
                         <el-option :label="options.name" :value="options.name" v-for="(options,i) in list" :key="i"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="二级分类">
-                    <el-select v-model="form.region" placeholder="请选择分类">
+                    <el-select v-model="form.secondary_classify" placeholder="请选择分类">
                         <el-option :label="options.name" :value="options.name" v-for="(options,i) in list" :key="i"></el-option>
                     </el-select>
                 </el-form-item>
@@ -27,7 +27,7 @@
            
             <div v-if="isLogo" style="width:30%">
                 <el-form-item label="logo">
-                    <el-input v-model="form.names"></el-input>
+                    <el-input v-model="form.name"></el-input>
                 </el-form-item>
             </div>
             <el-form-item>
@@ -76,14 +76,11 @@ export default {
             isLogo:false,
             isFace:true,
             form: {
-                names: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+                ai_type:'',
+                name: '',
+                primary_classify: '',
+                secondary_classify: '',
+                upload_file:''
             },
              list: [
                 {name:"人脸识别"},
@@ -111,6 +108,9 @@ export default {
     created(){
         
     },
+     beforeUpdate() {
+    console.log(this.form);
+  },
     methods:{
         // logo
         isHide(){

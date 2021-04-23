@@ -11,7 +11,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="数据描述">
-          <el-input type="textarea" v-model="form.data_description"></el-input>
+          <el-input type="textarea" v-model="form.data_description" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="底库分类">
           <el-form-item label="一级分类">
