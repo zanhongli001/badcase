@@ -4,33 +4,33 @@
       <h2>底库数据详情</h2>
       <p>
         <span>任务ID：</span>
-        <span>D2021040804</span>
+        <span>{{list.task_id}}</span>
       </p>
       <p>
         <span>数据类型：</span>
-        <span>人脸数据</span>
+        <span>{{list.ai_type}}</span>
       </p>
       <p>
         <span>数据描述：</span>
-        <span>增加石涛的人脸</span>
+        <span>{{list.data_description}}</span>
       </p>
       <div class="fl-type">
         <p>底库分类：</p>
         <div class="all-type">
           <span>一级分类</span>
-          <span v-for="(item, index) in numCassfil" :key="index">
-            {{ item }}
+          <span>
+            {{list.primary_classify}}
           </span>
           <p>
             <span>二级分类</span>
-            <span v-for="(item, index) in numCassfil" :key="index">
-              {{ item }}
+            <span>
+              {{ list.secondary_classify }}
             </span>
           </p>
           <p>
             <span>人名</span>
-            <span v-for="(item, index) in numCassfil" :key="index">
-              {{ item }}
+            <span>
+              {{ list.name }}
             </span>
           </p>
         </div>
@@ -38,12 +38,14 @@
 
       <p>
         <span class="data-img">数据文件</span>
-        <img
-          :src="index"
+        <img :src="list.data_file"
+          class="avatar">
+        <!-- <img
+          :src="list.data_file"
           class="avatar"
           v-for="(index, i) in imageUrl"
           :key="i"
-        />
+        /> -->
         <!-- <div v-for="(item,ind) in imageUrl" :key="ind">
                   <img :src="item" alt="">
                 </div> -->
@@ -80,6 +82,7 @@
   </div>
 </template>
 <script>
+import request from "../../plugins/request";
 export default {
   data() {
     return {
@@ -87,20 +90,40 @@ export default {
         audit_operate: "",
         comment: "",
       },
-      imageUrl: ["https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg","https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg","https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg"],
+      list:{},
+      imageUrl: [
+        // "https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg",
+        // "https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg",
+        // "https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg",
+      ],
       numCassfil: [],
+      listId:this.$route.query.id
     };
   },
-  created() {},
+  created() {
+   this.getDetailList()
+  },
   beforeUpdate() {
     console.log(this.form);
+    console.log(this.list);
+
   },
   methods: {
     onSubmit() {
-      console.log();
     },
     close() {
       this.$router.push({ name: "policy" });
+    },
+    getDetailList() {
+      const loading = this.$loading({
+        lock: true,
+      });
+      request.fetchGet(`/AIBaseDataList?id=${this.listId}`).then(async (res) => {
+        // console.log(res.data.data.ai_type);
+        this.list  = await res.data.data.ai_type;
+        // this.tableData = result;
+        loading.close();
+      });
     },
   },
 };
@@ -134,21 +157,20 @@ export default {
 }
 .fl-type {
   display: flex;
-  text-align: right;
+  text-align: center;
 }
-.all-type{
-    margin-top:30px;
+.all-type {
+  margin-top: 30px;
 }
-.avatar{
-    width: 90px;
-    height: 50px;
-     line-height: 50px;
-     margin-right: 10px;
+.avatar {
+  width: 90px;
+  height: 50px;
+  line-height: 50px;
+  margin-right: 10px;
 }
-.data-img{
-    display: inline-block;
-    width: 90px;
-    height: 50px;
-   
+.data-img {
+  display: inline-block;
+  width: 90px;
+  height: 50px;
 }
 </style>

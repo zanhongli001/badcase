@@ -49,6 +49,7 @@
     </div>
 </template>
 <script>
+import request from '../../plugins/request'
 export default {
     data(){
         return {
@@ -58,8 +59,12 @@ export default {
             },
            
             imageUrl:[],
-            numCassfil:[]
+            numCassfil:[],
+            listId:this.$route.query.id
         }
+    },
+    created(){
+ this.getDetailList()
     },
      beforeUpdate(){
          console.log(this.form)
@@ -70,7 +75,16 @@ export default {
         },
         close(){
             this.$router.push({ name: "website" });
-        }        
+        },
+         getDetailList() {
+      const loading = this.$loading({
+        lock: true,
+      });
+      request.fetchGet(`/AIBadCaseFeedback?id=${this.listId}`).then(async (res) => {
+        this.list  = await res.data.data.ai_type;
+        loading.close();
+      });
+    },        
     }
 }
 </script>

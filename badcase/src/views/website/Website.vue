@@ -70,7 +70,7 @@
         prop="comment"
         label="备注"
         width="180"
-        :formatter="formatter"
+        
       >
       </el-table-column>
       <el-table-column
@@ -118,47 +118,7 @@ export default {
       ],
       params: {},
       itemId:[],
-      tableData: [
-        {
-          task_id: "111",
-          scene_classify: "人脸识别",
-          feedback_type: "漏识别",
-          feedback_description: "石涛人脸漏识别",
-          status: 0,
-          submitter: "张三",
-          auditor: "王五",
-          upload_time: 1619079871,
-          handle_time: 1619079934,
-          handle_result: "未解决",
-          comment: "",
-        },
-         {
-          task_id: "222",
-          scene_classify: "人脸识别",
-          feedback_type: "漏识别",
-          feedback_description: "石涛人脸漏识别",
-          status: 1,
-          submitter: "张三",
-          auditor: "王五",
-          upload_time: 1619079871,
-          handle_time: 1619079934,
-          handle_result: "未解决",
-          comment: "",
-        },
-         {
-          task_id: "333",
-          scene_classify: "人脸识别",
-          feedback_type: "漏识别",
-          feedback_description: "石涛人脸漏识别",
-          status: 0,
-          submitter: "张三",
-          auditor: "王五",
-          upload_time: 1619079871,
-          handle_time: 1619079934,
-          handle_result: "未解决",
-          comment: "",
-        },
-      ],
+      tableData: [],
     };
   },
   created() {
@@ -182,7 +142,7 @@ export default {
     //    点击详情
     openDedail(id) {
       console.log(id)
-      this.$router.push({ name: "badDetails" });
+      this.$router.push({ name: "badDetails" ,query:{id:id}});
     },
     all() {
       this.addAll = "active";
@@ -204,14 +164,17 @@ export default {
         })
         .catch((_) => {});
     },
-    async getList() {
+     getList () {
       const loading = this.$loading({
         lock: true,
       });
-      request.fetchGet("/search/hot/detail").then((res) => {
-        console.log(res);
+      request.fetchGet("/AIBadcaseFeedbackList").then(async(res) => {
+        console.log(res.data.data);
+        let result = await res.data.data
+        this.tableData = result
+        loading.close();
       });
-      loading.close();
+      
     },
   //  选中当前的内容
     handleEdit (row) {  

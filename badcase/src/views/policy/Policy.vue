@@ -30,7 +30,7 @@
     >
       <el-table-column label="任务ID" width="100">
         <template slot-scope="scope">
-          <div class="codeId" @click="openDedail(scope.row.date)">
+          <div class="codeId" @click="openDedail(scope.row.task_id)">
             {{ scope.row.task_id }}
           </div>
         </template>
@@ -65,29 +65,19 @@
 </template>
 <script>
 import faceRepeat from "./faceRepeat.vue";
+import request from "../../plugins/request";
 export default {
   components: { faceRepeat },
   data() {
     return {
       params: {},
-      tableData: [
-        {
-          task_id: "2021040804",
-          ai_type: 0,
-          data_description: "增加石涛的脸",
-          status: 1,
-          submitter: "张三",
-          auditor: "王五",
-          upload_time: 1619079871,
-          audit_time: 1619079934,
-          audit_result: "未上传底库",
-          comment: "",
-        },
-      ],
+      tableData: [],
       dialogVisible: false,
     };
   },
-  created() {},
+  created() {
+    this.getList()
+  },
   methods: {
     // 上传
     onUplode() {
@@ -98,8 +88,8 @@ export default {
       return row.address;
     },
     //    点击详情
-    openDedail() {
-      this.$router.push({ name: "dedailPage" });
+    openDedail(id) {
+      this.$router.push({ name: "dedailPage" ,query:{id:id}});
     },
     // 弹框
     handleClose(done) {
@@ -108,6 +98,19 @@ export default {
           done();
         })
         .catch((_) => {});
+    },
+
+     getList () {
+      const loading = this.$loading({
+        lock: true,
+      });
+      request.fetchGet("/AIBaseAuditList").then(async(res) => {
+        console.log(res.data.data);
+        let result = await res.data.data
+        this.tableData = result
+        loading.close();
+      });
+      
     },
   },
 };
