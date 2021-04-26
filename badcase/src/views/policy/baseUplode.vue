@@ -49,11 +49,10 @@
         </el-form-item>
         <el-form-item label="选择文件">
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="https://www.fastmock.site/mock/f184598ed3f958f47a62880f6c012b2c/v1_badcase/AIUploadImage"
             list-type="picture-card"
-            :auto-upload="false"
             :on-change="handleChange"
-            :file-list="form.fileList"
+            :file-list="form.upload_file"
             multiple
             :accept="accept"
             :before-upload="beforeUpload"
@@ -111,6 +110,7 @@
 </template>
 <script>
 import faceRepeat from "./faceRepeat.vue";
+import {uplodPol} from '../../api/api'
 export default {
   components: { faceRepeat },
   data() {
@@ -123,7 +123,7 @@ export default {
         primary_classify: "",
         secondary_classify: "",
         data_description: "",
-        fileList: [],
+        upload_file: [],
       },
       rules:{
          data_description: [
@@ -161,17 +161,17 @@ export default {
     delite() {
       this.$router.push({ name: "policy" });
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    handleRemove(file, upload_file) {
+      console.log(file, upload_file);
       //   file.raw.splice(0,1)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    handleChange(file, fileList) {
-      this.form.fileList = fileList;
-      console.log(file, fileList);
+    handleChange(file, upload_file) {
+      this.form.upload_file = upload_file;
+      console.log(file, upload_file);
     },
     // 限制上传类型
    beforeUpload(file) {
@@ -185,17 +185,26 @@ export default {
 				return extension;
 			},
       // 提交
-      submitForm(formName) {
+    async  submitForm(formName) {
         console.log(this.$refs[formName])
         this.$refs[formName].validate((valid) => {
           if (valid) {
+              this.uplodForm()
             this.$message.success('成功');
           } else {
             this.$message.error('请填写完整');
             return false;
           }
         });
+       
+      
+       
+        
       },
+    async uplodForm(){
+      let result = await uplodPol(this.form);
+          console.log(result)
+      }
   },
 };
 </script>

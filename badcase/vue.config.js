@@ -1,14 +1,14 @@
 module.exports = {
     //axios域代理，解决axios跨域问题
-    baseUrl: '/',
+    // baseUrl: '/',
     devServer: {
         proxy: {
-            '': {
-                target: "http://localhost:3000",
+            '/v1_badcase': {
+                target: "https://www.fastmock.site/mock/f184598ed3f958f47a62880f6c012b2c/v1_badcase",
                 changeOrigin: true,
-                // ws: true,
+                ws: true,
                 pathRewrite: {
-
+                    '^/v1_badcase':"/"
                 }
             }
         }

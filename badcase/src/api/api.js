@@ -23,4 +23,8 @@ return res
 
 // 上传底库数据
 
-// export function 
+export function uplodPol(data){
+    return fetchPost('/UploadAIBaseData',data).then((res) => {
+        return res
+    })
+}

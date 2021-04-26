@@ -3,7 +3,7 @@ import qs from 'qs'
 
 axios.defaults.timeout = 5000;                        //响应时间
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';        //配置请求头
-axios.defaults.baseURL = 'https://www.fastmock.site/mock/f184598ed3f958f47a62880f6c012b2c/v1_badcase';   //配置接口地址
+axios.defaults.baseURL = '/v1_badcase';   //配置接口地址
 
 // //POST传参序列化(添加请求拦截器)
 // axios.interceptors.request.use((config) => {
