@@ -48,12 +48,12 @@
                         <i class="el-icon-location"></i>
                         <span>文档</span>
                     </template>
-                    <el-menu-item index="files">
-                        <i class="el-icon-location"></i>
+                    <el-menu-item index="policyText">
+                        <i class="el-icon-success"></i>
                         <span>底库数据搜集文档</span>
                     </el-menu-item>
-                    <el-menu-item index="files">
-                        <i class="el-icon-location"></i>
+                    <el-menu-item index="badText">
+                        <i class="el-icon-success"></i>
                         <span>badcase说明文档</span>
                     </el-menu-item>
                 </el-submenu>
@@ -103,8 +103,14 @@ export default {
                if (index == 'dedailPage') {
                   return 'policy'
                }
-                if (index == 'baseUplode') {
-                  return 'policy'
+               if(index == 'baseUplode'){
+                   return 'policy'
+               }
+                if (index == 'policyText') {
+                  return 'policyText'
+               }
+                if (index == 'badText') {
+                  return 'badText'
                }
                
 				return this.$route.path.replace('/', '');

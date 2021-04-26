@@ -42,12 +42,7 @@ const router = new Router({
         path:'addWebsite',
         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/AddWebsite.vue')
       },
-      {
-        name:'files',
-        path: 'files',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/files.vue')
-       
-      },
+     
       {
         name:'badUplode',
         path: 'badUplode',
@@ -58,6 +53,18 @@ const router = new Router({
         name:'badDetails',
         path: 'badDetails',
         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badDetails')
+       
+      },
+      {
+        name:'policyText',
+        path: 'policyText',
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/policyText.vue')
+       
+      },
+      {
+        name:'badText',
+        path: 'badText',
+        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/badText.vue')
        
       },
     ]

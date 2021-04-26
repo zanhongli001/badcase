@@ -1,8 +1,8 @@
 <template>
   <div>
     <h2>新建badcase</h2>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="场景分类">
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form-item label="场景分类" prop="scene_classify">
         <el-select v-model="form.scene_classify" placeholder="人脸数据">
           <el-option
             v-for="(item, ind) in list"
@@ -12,30 +12,30 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="问题类型">
+      <el-form-item label="问题类型" prop="feedback_type">
         <el-radio-group v-model="form.feedback_type">
           <el-radio v-model="radio" label="漏识别" @change="show">漏识别</el-radio>
           <el-radio v-model="radio" label="误识别" @change="hide">误识别</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="know">
+      <el-form-item v-if="know" prop="feedback_two_type">
            <el-radio-group v-model="form.feedback_two_type">
         <el-radio v-model="radio2" label="现有模型漏识别"></el-radio>
         <el-radio v-model="radio2" label="新需求"></el-radio>
     </el-radio-group>
    </el-form-item>
 
-      <el-form-item label="问题描述">
+      <el-form-item label="问题描述" prop="feedback_description">
         <el-input type="textarea" v-model="form.feedback_description" style="width: 300px"></el-input>
       </el-form-item>
       <el-form-item label="选择图片">
         <el-upload
-          action="#"
+          action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
-          :auto-upload="false"
           multiple
-          :on-change="handleChange"
-          accept=".jpg, .jpeg, .png"
+         :auto-upload="false"
+         :accept="accept"
+           :before-upload="handleChange"
         >
           <i slot="default" class="el-icon-plus"></i>
           <div class="upImg" slot="file" slot-scope="{ file }">
@@ -67,7 +67,7 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="close">取消</el-button>
-          <el-button type="primary" @click="onSubmit">提交</el-button>
+          <el-button type="primary" @click="submitForm('form')">提交</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -84,6 +84,7 @@ export default {
         feedback_image:"",
         scene_classify: "",
       },
+       accept: '.png,.jpg,.svg,.jpeg',
       radio: "1",
       radio2: "2",
       know: false,
@@ -102,6 +103,20 @@ export default {
         "语音识别",
         "声纹识别",
       ],
+       rules:{
+         scene_classify: [
+            { required: true, message: '请输入场景分类', trigger: 'blur' },
+          ],
+           feedback_type: [
+            { required: true, message: '请选择反馈问题类型', trigger: 'change' }
+          ],
+            feedback_two_type: [
+            { required: true, message: '请选择反馈问题类型', trigger: 'change' }
+          ], 
+           feedback_description: [
+            { required: true, message: '请输入问题描述', trigger: 'blur' },
+          ],
+      },
     };
   },
   created() {},
@@ -112,7 +127,6 @@ console.log(this.form)
     onFaceRepeat() {
       this.$router.push({ name: "faceRepeat" });
     },
-    onSubmit() {},
     show() {
       this.know = true;
     },
@@ -131,8 +145,9 @@ console.log(this.form)
       this.$router.push({ name: "website" });
     },
     handleChange(file) {
-      const isTypeTrue = /^image\/(jpeg|png|jpg)$/.test(file.raw.type);
-      const isLt300K = file.size / 1024 / 1024 < 15;
+      console.log(file)
+      const isTypeTrue = /^image\/(jpeg|png|jpg)$/.test(file.type);
+      const isLt300K = file.size / 1024 / 1024 < 5;
       if (!isLt300K) {
         this.$message.error("上传图片大小不能超过5mb!");
         return false;
@@ -142,6 +157,16 @@ console.log(this.form)
         return false;
       }
     },
+     submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$message.success('成功');
+          } else {
+            this.$message.error('请填写完整');
+            return false;
+          }
+        });
+      },
   },
 };
 </script>

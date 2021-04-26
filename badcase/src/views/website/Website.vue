@@ -106,7 +106,7 @@
   </div>
 </template>
 <script>
-import request from "../../plugins/request";
+import request from "../../utils/request";
 export default {
   data() {
     return {

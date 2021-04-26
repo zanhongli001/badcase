@@ -39,7 +39,8 @@
       <el-table-column prop="data_description" label="描述"> </el-table-column>
       <el-table-column prop="status" label="状态" sortable> </el-table-column>
       <el-table-column prop="submitter" label="提交人"> </el-table-column>
-      <el-table-column prop="auditor" label="审核人" sortable> </el-table-column>
+      <el-table-column prop="auditor" label="审核人" sortable>
+      </el-table-column>
       <el-table-column prop="upload_time" label="上传时间"> </el-table-column>
       <el-table-column prop="audit_time" label="审核时间"> </el-table-column>
       <el-table-column prop="audit_result" label="审核结果"> </el-table-column>
@@ -50,22 +51,17 @@
     <el-dialog
       title="查询底库数据"
       :visible.sync="dialogVisible"
-      width="80%"
+      width="70%"
       :before-close="handleClose"
     >
       <face-repeat></face-repeat>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
-      </span>
+      <span slot="footer" class="dialog-footer"> </span>
     </el-dialog>
   </div>
 </template>
 <script>
 import faceRepeat from "./faceRepeat.vue";
-import request from "../../plugins/request";
+import { getPolList } from "../../api/api";
 export default {
   components: { faceRepeat },
   data() {
@@ -76,7 +72,7 @@ export default {
     };
   },
   created() {
-    this.getList()
+    this.getList();
   },
   methods: {
     // 上传
@@ -89,7 +85,7 @@ export default {
     },
     //    点击详情
     openDedail(id) {
-      this.$router.push({ name: "dedailPage" ,query:{id:id}});
+      this.$router.push({ name: "dedailPage", query: { id: id } });
     },
     // 弹框
     handleClose(done) {
@@ -100,17 +96,14 @@ export default {
         .catch((_) => {});
     },
 
-     getList () {
+    async getList() {
       const loading = this.$loading({
         lock: true,
       });
-      request.fetchGet("/AIBaseAuditList").then(async(res) => {
-        console.log(res.data.data);
-        let result = await res.data.data
-        this.tableData = result
-        loading.close();
-      });
-      
+      let result = await getPolList();
+      console.log(result);
+      this.tableData = result;
+      loading.close();
     },
   },
 };

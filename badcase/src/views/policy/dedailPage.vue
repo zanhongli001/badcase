@@ -4,33 +4,33 @@
       <h2>底库数据详情</h2>
       <p>
         <span>任务ID：</span>
-        <span>{{list.task_id}}</span>
+        <span>{{ form.task_id }}</span>
       </p>
       <p>
         <span>数据类型：</span>
-        <span>{{list.ai_type}}</span>
+        <span>{{ form.ai_type }}</span>
       </p>
       <p>
         <span>数据描述：</span>
-        <span>{{list.data_description}}</span>
+        <span>{{ form.data_description }}</span>
       </p>
       <div class="fl-type">
         <p>底库分类：</p>
         <div class="all-type">
           <span>一级分类</span>
           <span>
-            {{list.primary_classify}}
+            {{ form.primary_classify }}
           </span>
           <p>
             <span>二级分类</span>
             <span>
-              {{ list.secondary_classify }}
+              {{ form.secondary_classify }}
             </span>
           </p>
           <p>
             <span>人名</span>
             <span>
-              {{ list.name }}
+              {{ form.name }}
             </span>
           </p>
         </div>
@@ -38,8 +38,7 @@
 
       <p>
         <span class="data-img">数据文件</span>
-        <img :src="list.data_file"
-          class="avatar">
+        <img v-for="(item,ind) in form.data_file " :key="ind" :src="item" class="avatar" />
         <!-- <img
           :src="list.data_file"
           class="avatar"
@@ -60,15 +59,15 @@
         <div class="classfil">
           <el-form-item>
             <el-radio-group v-model="form.audit_operate">
-              <el-radio label="上传底库"></el-radio>
-              <el-radio label="不上传"></el-radio>
+              <el-radio label="1">上传底库</el-radio>
+              <el-radio label="0">不上传</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="备注">
             <el-input v-model="form.comment"></el-input>
           </el-form-item>
           <el-form-item style="padding-left: 10px">
-            <el-button type="primary" @click="onSubmit">提交</el-button>
+            <el-button type="primary" @click="subDetailList(form) ">提交</el-button>
           </el-form-item>
         </div>
       </el-form-item>
@@ -82,7 +81,7 @@
   </div>
 </template>
 <script>
-import request from "../../plugins/request";
+import { getPolDetail,subPolDetail } from "../../api/api";
 export default {
   data() {
     return {
@@ -90,41 +89,36 @@ export default {
         audit_operate: "",
         comment: "",
       },
-      list:{},
-      imageUrl: [
-        // "https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg",
-        // "https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg",
-        // "https://img1.baidu.com/it/u=3144617642,992552336&fm=15&fmt=auto&gp=0.jpg",
-      ],
+      imageUrl: [],
       numCassfil: [],
-      listId:this.$route.query.id
+      listId: this.$route.query.id,
     };
   },
   created() {
-   this.getDetailList()
+    this.getDetailList();
   },
   beforeUpdate() {
     console.log(this.form);
-    console.log(this.list);
-
   },
   methods: {
-    onSubmit() {
-    },
+  
     close() {
       this.$router.push({ name: "policy" });
     },
-    getDetailList() {
+    async getDetailList() {
       const loading = this.$loading({
         lock: true,
       });
-      request.fetchGet(`/AIBaseDataList?id=${this.listId}`).then(async (res) => {
-        // console.log(res.data.data.ai_type);
-        this.list  = await res.data.data.ai_type;
-        // this.tableData = result;
-        loading.close();
-      });
+      let result = await getPolDetail(this.listId);
+      console.log(result);
+      this.form = result;
+      loading.close();
     },
+    async subDetailList(data){
+     let respons = await subPolDetail(data)
+     console.log(respons)
+    }
+
   },
 };
 </script>

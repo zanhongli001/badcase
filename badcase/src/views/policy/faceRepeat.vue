@@ -37,29 +37,31 @@
         <el-table
             :data="tableData"
             border
-            style="width: 100%">
+            style="width: 85%">
             <el-table-column
             prop="date"
-            label="分类"
-            width="180">
+            label="类型"
+            width="100">
             </el-table-column>
             <el-table-column
             prop="name"
             label="一级分类"
-            width="180">
+            width="150">
             </el-table-column>
             <el-table-column
             prop="address"
-            label="二级分类">
+            label="二级分类"
+            width="150">
             </el-table-column>
             <el-table-column
             prop="address"
-            label="详情">
+            label="详情"
+            width="200">
             </el-table-column>
              <el-table-column
             fixed="right"
             label="操作"
-            width="100">
+            width="180">
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
