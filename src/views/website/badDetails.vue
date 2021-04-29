@@ -1,7 +1,7 @@
 <template>
   <div class="comenten">
     <div class="comenten-text">
-      <h2>详情</h2>
+      <h2>badcase反馈详情</h2>
       <p>
         <span>任务ID：</span>
         <span>{{ form.task_id }}</span>
@@ -25,7 +25,6 @@
           class="avatar"
           v-for="(index, i) in form.feedback_image"
           :key="i"
-          
         />
         <!-- <div v-for="(item,ind) in imageUrl" :key="ind">
                   <img :src="item" alt="">

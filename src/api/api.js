@@ -1,6 +1,5 @@
 import { fetchPost,fetchGet} from '../utils/request'
 import qs from 'qs'
-import {Loading} from 'element-ui'
 // let loading =  this.$loading({
 //     lock: true,
 //   });
@@ -8,8 +7,6 @@ import {Loading} from 'element-ui'
 export function getPolList(params){
     return  fetchGet('/AIBaseAuditList',params).then((res) =>{
 return res.data.data
-    }).catch(() => {
-        Loading.close()
     })
 }
 
