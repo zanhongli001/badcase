@@ -26,8 +26,8 @@
           </el-form-item>
         </el-form-item>
         <el-form-item label="">
-          <el-form-item v-model="resList" label="二级分类" prop="secondary_classify">
-            <el-select  v-for="item in list" :key="item.id"
+          <el-form-item v-model="form.secondary_classify" label="二级分类" prop="secondary_classify">
+            <el-select
               v-model="form.secondary_classify"
               placeholder="请选择二级分类"
             >
@@ -50,7 +50,7 @@
         </el-form-item>
         <el-form-item label="选择文件">
           <el-upload
-            action="http://172.18.25.10:8051/policy/file/"
+            action="/v1_badcase/policy/file/"
             list-type="picture-card"
             :on-change="handleChange"
             :file-list="form.upload_file"
@@ -118,6 +118,7 @@ export default {
     return {
       accept: '.png,.jpg,.svg,.jpeg',
       dialogVisible: false,
+      select2:"",
       form: {
         ai_type: "",
         name: "",
@@ -149,7 +150,7 @@ export default {
     };
   },
   beforeUpdate() {
-    console.log(this.form);
+    // console.log(this.form);
   },
   methods: {
     // 弹框
@@ -174,7 +175,6 @@ export default {
     },
     handleChange(file, upload_file) {
       this.form.upload_file = upload_file;
-      console.log('----',file, upload_file);
     },
     // 限制上传类型
    beforeUpload(file) {
@@ -198,10 +198,6 @@ export default {
             return false;
           }
         });
-       
-      
-       
-        
       },
       // 提交
     async uplodForm(){
@@ -214,12 +210,15 @@ export default {
       for(let i in this.list){
         for(let j in this.list[i].members)
        this.resList.push(this.list[i].members[j]) 
+       console.log(this.resList)
         }
-      }
+      },
+    
   },
   created(){
     this.polIfy()
-  }
+  },
+ 
 };
 </script>
 <style>
