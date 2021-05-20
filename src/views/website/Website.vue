@@ -31,6 +31,7 @@
       style="width: 100%"
       :default-sort="{ prop: 'tableData', order: 'descending' }"
       @selection-change="handleEdit"
+      @sort-change="sortChange"
     >
       >
       <el-table-column prop="task_id" type="selection" width="50">
@@ -42,7 +43,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="cate" label="场景分类" sortable width="120">
+      <el-table-column prop="cate" label="场景分类"  sortable='custom'  width="120">
       </el-table-column>
       <el-table-column prop="type" label="问题类型" width="80">
         <template slot-scope="scope">
@@ -93,7 +94,8 @@
         >
       </span>
     </el-dialog>
-    <el-pagination
+    <div class="page">
+       <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="page"
@@ -105,6 +107,8 @@
       @next-click="pageChange"
     >
     </el-pagination>
+    </div>
+   
   </div>
 </template>
 <script>
@@ -145,6 +149,11 @@ export default {
     // console.log(this.itemId);
   },
   methods: {
+    // 排序
+    sortChange(column){
+ console.log(column)
+ 
+    },
     handleSizeChange(size) {
       // 每页显示的数量是我们选择器选中的值size
       this.pageSize = size;
@@ -295,5 +304,9 @@ export default {
 }
 .el-img {
   margin-left: 10px;
+}
+.page{
+  margin-top: 10px;
+  float: right;
 }
 </style>
