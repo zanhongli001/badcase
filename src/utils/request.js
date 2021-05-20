@@ -147,7 +147,37 @@ export function fetchGet(url, param) {
             })
     })
 }
+export function fetchPut(url, data) {
+    return new Promise((resolve, reject) => {
+        axios.put(url, data)
+            .then(response => {
+
+                resolve(response);
+            }, err => {
+                reject(err);
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+export function fetchDelete(url, data) {
+    return new Promise((resolve, reject) => {
+        axios.delete(url, data)
+            .then(response => {
+
+                resolve(response);
+            }, err => {
+                reject(err);
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
 export default {
     fetchPost,
     fetchGet,
+    fetchPut,
+    fetchDelete
 }

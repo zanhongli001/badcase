@@ -2,13 +2,13 @@
   <div>
     <h2>新建badcase</h2>
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="场景分类" prop="scene_classify">
-        <el-select v-model="form.scene_classify" placeholder="人脸数据">
+      <el-form-item label="场景分类" prop="cate">
+        <el-select v-model="form.cate" placeholder="人脸数据">
           <el-option
-            v-for="(item, ind) in list"
-            :key="ind"
-            :label="item"
-            :value="item"
+            v-for="item in list"
+            :key="item.id"
+            :label="item.name"
+            :value="item.name"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -25,17 +25,17 @@
     </el-radio-group>
    </el-form-item>
 
-      <el-form-item label="问题描述" prop="feedback_description">
-        <el-input type="textarea" v-model="form.feedback_description" style="width: 300px"></el-input>
+      <el-form-item label="问题描述" prop="desc">
+        <el-input type="textarea" v-model="form.desc" style="width: 300px"></el-input>
       </el-form-item>
       <el-form-item label="选择图片">
         <el-upload
-          action="#"
+          action="/v1_badcase/badcase/file/"
           list-type="picture-card"
-          multiple
-         :auto-upload="false"
-         :accept="accept"
+           multiple
+           :accept="accept"
            :before-upload="handleChange"
+           :on-success="handleSuccess"
         >
           <i slot="default" class="el-icon-plus"></i>
           <div class="upImg" slot="file" slot-scope="{ file }">
@@ -73,17 +73,17 @@
   </div>
 </template>
 <script>
-import {uplodBad} from '../../api/api'
+import {uplodBad,getBadIfy} from '../../api/api'
 export default {
   data() {
     return {
       form: {
-        name: "",
         feedback_type:"",
         feedback_two_type:"",
-        feedback_description:"",
+        desc:"",
         feedback_image:"",
-        scene_classify: "",
+        cate: "",
+        file:[]
       },
        accept: '.png,.jpg,.svg,.jpeg',
       radio: "1",
@@ -93,19 +93,9 @@ export default {
       dialogVisible: false,
       disabled: false,
       multiple: true,
-      list: [
-        "人脸识别",
-        "暴恐场景识别",
-        "敏感旗帜识别",
-        "境外台标识别",
-        "敏感事件识别",
-        "淫秽色情识别",
-        "图片文字提取",
-        "语音识别",
-        "声纹识别",
-      ],
+      list: [],
        rules:{
-         scene_classify: [
+         cate: [
             { required: true, message: '请输入场景分类', trigger: 'blur' },
           ],
            feedback_type: [
@@ -114,15 +104,17 @@ export default {
             feedback_two_type: [
             { required: true, message: '请选择反馈问题类型', trigger: 'change' }
           ], 
-           feedback_description: [
+           desc: [
             { required: true, message: '请输入问题描述', trigger: 'blur' },
           ],
       },
     };
   },
-  created() {},
+  created() {
+    this.badIfyClass()
+  },
   beforeUpdate(){
-console.log(this.form)
+    console.log(this.form)
   },
   methods: {
     onFaceRepeat() {
@@ -146,9 +138,8 @@ console.log(this.form)
       this.$router.push({ name: "website" });
     },
     handleChange(file) {
-      console.log(file)
       const isTypeTrue = /^image\/(jpeg|png|jpg)$/.test(file.type);
-      const isLt300K = file.size / 1024 / 1024 < 5;
+      const isLt300K = file.size / 1024 / 1024 < 100;
       if (!isLt300K) {
         this.$message.error("上传图片大小不能超过5mb!");
         return false;
@@ -169,11 +160,21 @@ console.log(this.form)
           }
         });
       },
+      // 上传图片成功
+      handleSuccess(res){
+        this.form.file.push(res.id)
+      },
+      // 提交
         async uplodForm(){
          
       let result = await uplodBad(this.form);
           console.log(result)
+      },
+      // 获取场景分类
+        async badIfyClass(){
+       this.list = await getBadIfy();
       }
+
   },
 };
 </script>

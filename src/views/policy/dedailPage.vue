@@ -8,7 +8,7 @@
       </p>
       <p>
         <span>数据类型：</span>
-        <span>{{ form.type }}</span>
+        <span> {{badType[form.type]}}</span>
       </p>
       <p>
         <span>数据描述：</span>
@@ -81,7 +81,7 @@
   </div>
 </template>
 <script>
-import { getPolDetail,subPolDetail } from "../../api/api";
+import { getPolDetail,subPolDetail,getPolType } from "../../api/api";
 export default {
   data() {
     return {
@@ -92,9 +92,11 @@ export default {
       imageUrl: [],
       numCassfil: [],
       listId: this.$route.query.id,
+      badType:[]
     };
   },
   created() {
+    this.getType();
     this.getDetailList();
   },
   beforeUpdate() {
@@ -124,7 +126,11 @@ export default {
       console.log(data)
      let respons = await subPolDetail(data)
      console.log(respons)
-    }
+    },
+     //获取问题类型
+ async getType() {
+     this.badType = await getPolType()
+    },
 
   },
 };

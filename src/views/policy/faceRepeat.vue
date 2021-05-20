@@ -72,9 +72,6 @@
           <el-button @click="handleClick(scope.row)" type="text" size="small"
             >删除</el-button
           >
-          <el-button @click="handleClick(scope.row)" type="text" size="small"
-            >更改</el-button
-          >
         </template>
       </el-table-column>
     </el-table>
