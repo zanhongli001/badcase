@@ -35,39 +35,39 @@
       >
       <el-table-column prop="task_id" type="selection" width="50">
       </el-table-column>
-      <el-table-column prop="task_id" label="任务ID" width="180">
+      <el-table-column prop="id" label="任务ID" width="180">
         <template slot-scope="scope">
           <div class="codeId" @click="openDedail(scope.row.task_id)">
-            {{ scope.row.task_id }}
+            {{ scope.row.id }}
           </div>
         </template>
       </el-table-column>
       <el-table-column
-        prop="scene_classify"
+        prop="cate"
         label="场景分类"
         sortable
         width="120"
       >
       </el-table-column>
-      <el-table-column prop="feedback_type" label="问题类型" width="80">
+      <el-table-column prop="type" label="问题类型" width="80">
       </el-table-column>
       <el-table-column
-        prop="feedback_description"
+        prop="desc"
         label="描述"
         sortable
         width="180"
       >
       </el-table-column>
       <el-table-column prop="status" label="状态" width="70"> </el-table-column>
-      <el-table-column prop="submitter" label="提交人" sortable width="90">
+      <el-table-column prop="username" label="提交人" sortable width="90">
       </el-table-column>
-      <el-table-column prop="auditor" label="处理人" sortable width="90">
+      <el-table-column prop="handler" label="处理人" sortable width="90">
       </el-table-column>
-      <el-table-column prop="upload_time" label="上传时间" width="180">
+      <el-table-column prop="update_time" label="上传时间" width="180">
       </el-table-column>
-      <el-table-column prop="handle_time" label="处理时间" width="180">
+      <el-table-column prop="create_time" label="处理时间" width="180">
       </el-table-column>
-      <el-table-column prop="comment" label="备注" width="180">
+      <el-table-column prop="node" label="备注" width="180">
       </el-table-column>
       <el-table-column
         prop="handle_result"
@@ -179,6 +179,7 @@ export default {
       try {
         let result = await getBadList();
         this.tableData = result;
+        console.log(this.tableData[0],'---')
         loading.close();
       } catch {
         loading.close();

@@ -47,8 +47,9 @@ export function queryPol(params){
 }
 // badcase列表
 export function getBadList(params){
-    return  fetchGet('/AIBadcaseFeedbackList',params).then((res) =>{
-return res.data.data
+    return  fetchGet('badcase/task/',params).then((res) =>{
+        console.log(res)
+return res.data.results
     })
 }
 
