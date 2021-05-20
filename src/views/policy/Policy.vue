@@ -30,21 +30,21 @@
     >
       <el-table-column label="任务ID" width="100">
         <template slot-scope="scope">
-          <div class="codeId" @click="openDedail(scope.row.task_id)">
-            {{ scope.row.task_id }}
+          <div class="codeId" @click="openDedail(scope.row.id)">
+            {{ scope.row.id }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="ai_type" label="类型" sortable> </el-table-column>
-      <el-table-column prop="data_description" label="描述"> </el-table-column>
+      <el-table-column prop="type" label="类型" sortable> </el-table-column>
+      <el-table-column prop="desc" label="描述"> </el-table-column>
       <el-table-column prop="status" label="状态" sortable> </el-table-column>
-      <el-table-column prop="submitter" label="提交人"> </el-table-column>
-      <el-table-column prop="auditor" label="审核人" sortable>
+      <el-table-column prop="username" label="提交人"> </el-table-column>
+      <el-table-column prop="auditer" label="审核人" sortable>
       </el-table-column>
-      <el-table-column prop="upload_time" label="上传时间"> </el-table-column>
-      <el-table-column prop="audit_time" label="审核时间"> </el-table-column>
-      <el-table-column prop="audit_result" label="审核结果"> </el-table-column>
-      <el-table-column prop="comment" label="备注" :formatter="formatter">
+      <el-table-column prop="update_time" label="上传时间"> </el-table-column>
+      <el-table-column prop="create_time" label="审核时间"> </el-table-column>
+      <el-table-column prop="result" label="审核结果"> </el-table-column>
+      <el-table-column prop="node" label="备注">
       </el-table-column>
     </el-table>
     <!-- 弹框 -->

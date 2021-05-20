@@ -4,33 +4,33 @@
       <h2>底库数据详情</h2>
       <p>
         <span>任务ID：</span>
-        <span>{{ form.task_id }}</span>
+        <span>{{ form.id }}</span>
       </p>
       <p>
         <span>数据类型：</span>
-        <span>{{ form.ai_type }}</span>
+        <span>{{ form.type }}</span>
       </p>
       <p>
         <span>数据描述：</span>
-        <span>{{ form.data_description }}</span>
+        <span>{{form.desc}}</span>
       </p>
       <div class="fl-type">
         <p>底库分类：</p>
         <div class="all-type">
-          <span>一级分类</span>
+          <span>一级分类：</span>
           <span>
             {{ form.primary_classify }}
           </span>
           <p>
-            <span>二级分类</span>
+            <span>二级分类：</span>
             <span>
               {{ form.secondary_classify }}
             </span>
           </p>
           <p>
-            <span>人名</span>
+            <span class="person"> 人名：</span>
             <span>
-              {{ form.name }}
+              {{ form.person }}
             </span>
           </p>
         </div>
@@ -143,6 +143,9 @@ export default {
   display: flex;
   width: 100%;
 }
+.person{
+  margin-left: 30px;
+}
 .comenten {
   vertical-align: middle;
   float: left;
@@ -162,6 +165,7 @@ export default {
 }
 .all-type {
   margin-top: 30px;
+  text-align: left;
 }
 .avatar {
   width: 90px;

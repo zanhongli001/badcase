@@ -14,23 +14,24 @@
           <el-input type="textarea" v-model="form.data_description" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="底库分类">
-          <el-form-item label="一级分类" prop="primary_classify">
+          <el-form-item  v-model="list"  label="一级分类" prop="primary_classify">
             <el-select
               v-model="form.primary_classify"
               placeholder="请选择一级分类"
             >
-              <el-option label="政治有害" value="政治有害"></el-option>
+              <el-option v-for=" (item,ind) in list " :key="ind" :label="item.name" :value="item.name"></el-option>
+            
               <el-option label="其他" value="其他"></el-option>
             </el-select>
           </el-form-item>
         </el-form-item>
         <el-form-item label="">
-          <el-form-item label="二级分类" prop="secondary_classify">
-            <el-select
+          <el-form-item v-model="resList" label="二级分类" prop="secondary_classify">
+            <el-select  v-for="item in list" :key="item.id"
               v-model="form.secondary_classify"
               placeholder="请选择二级分类"
             >
-              <el-option label="政治有害" value="政治有害"></el-option>
+              <el-option v-for="it in resList " :key="it.id" :label="it.name" :value="it.name"></el-option>
               <el-option label="其他" value="其他"></el-option>
             </el-select>
           </el-form-item>
@@ -49,9 +50,8 @@
         </el-form-item>
         <el-form-item label="选择文件">
           <el-upload
-            action="https://www.fastmock.site/mock/f184598ed3f958f47a62880f6c012b2c/v1_badcase/AIUploadImage"
+            action="http://172.18.25.10:8051/policy/file/"
             list-type="picture-card"
-            :auto-upload="false"
             :on-change="handleChange"
             :file-list="form.upload_file"
             multiple
@@ -111,7 +111,7 @@
 </template>
 <script>
 import faceRepeat from "./faceRepeat.vue";
-import {uplodPol} from '../../api/api'
+import {uplodPol,getPolIfy} from '../../api/api'
 export default {
   components: { faceRepeat },
   data() {
@@ -126,6 +126,8 @@ export default {
         data_description: "",
         upload_file: [],
       },
+      list:[],
+      resList:[],
       rules:{
          data_description: [
             { required: true, message: '请输入数据描述', trigger: 'blur' },
@@ -172,7 +174,7 @@ export default {
     },
     handleChange(file, upload_file) {
       this.form.upload_file = upload_file;
-      console.log(file, upload_file);
+      console.log('----',file, upload_file);
     },
     // 限制上传类型
    beforeUpload(file) {
@@ -201,11 +203,23 @@ export default {
        
         
       },
+      // 提交
     async uplodForm(){
       let result = await uplodPol(this.form);
           console.log(result)
+      },
+   async polIfy(){
+      let result = await getPolIfy();
+      this.list = result
+      for(let i in this.list){
+        for(let j in this.list[i].members)
+       this.resList.push(this.list[i].members[j]) 
+        }
       }
   },
+  created(){
+    this.polIfy()
+  }
 };
 </script>
 <style>

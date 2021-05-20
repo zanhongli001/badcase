@@ -39,10 +39,10 @@ module.exports = {
     // before: require('./mock/mock-server.js'),
     proxy: {
       '/v1_badcase': {
-          target: "https://www.fastmock.site/mock/f184598ed3f958f47a62880f6c012b2c/v1_badcase",
+          target: "http://api.audit-ai.tools.nrta.net.cn",
           changeOrigin: true,
           ws: true,
-          secure:false,
+          secure:true,
           pathRewrite: {
               '^/v1_badcase':''
           }

@@ -5,15 +5,22 @@ import qs from 'qs'
 //   });
 // 底库数据列表
 export function getPolList(params){
-    return  fetchGet('/AIBaseAuditList',params).then((res) =>{
-return res.data.data
+    return  fetchGet('/policy/task/',params).then((res) =>{
+return res.data.results
+    })
+}
+// 底库上传里分类请求
+export function getPolIfy(params){
+    return  fetchGet('policy/task_category/',params).then((res) =>{
+return res.data
     })
 }
 
 // 获取底库数据详情
 export function getPolDetail(params){
-    return  fetchGet(`/AIBaseAuditDetail?id=${params}`).then((res) =>{
-return res.data.data.ai_type
+    return  fetchGet(`/policy/task/${params}/`).then((res) =>{
+        console.log(res)
+return res.data
     })
 }
 // 提交底库数据详情
