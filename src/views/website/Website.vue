@@ -37,28 +37,25 @@
       </el-table-column>
       <el-table-column prop="id" label="任务ID" width="180">
         <template slot-scope="scope">
-          <div class="codeId" @click="openDedail(scope.row.task_id)">
+          <div class="codeId" @click="openDedail(scope.row.id)">
             {{ scope.row.id }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="cate"
-        label="场景分类"
-        sortable
-        width="120"
-      >
+      <el-table-column prop="cate" label="场景分类" sortable width="120">
       </el-table-column>
       <el-table-column prop="type" label="问题类型" width="80">
+        <template slot-scope="scope">
+          {{ badType[scope.row.type] }}
+        </template>
       </el-table-column>
-      <el-table-column
-        prop="desc"
-        label="描述"
-        sortable
-        width="180"
-      >
+      <el-table-column prop="desc" label="描述" sortable width="180">
       </el-table-column>
-      <el-table-column prop="status" label="状态" width="70"> </el-table-column>
+      <el-table-column prop="status" label="状态" width="70">
+        <template slot-scope="scope">
+          {{ badStatus[scope.row.status] }}
+        </template>
+      </el-table-column>
       <el-table-column prop="username" label="提交人" sortable width="90">
       </el-table-column>
       <el-table-column prop="handler" label="处理人" sortable width="90">
@@ -67,14 +64,11 @@
       </el-table-column>
       <el-table-column prop="create_time" label="处理时间" width="180">
       </el-table-column>
-      <el-table-column prop="node" label="备注" width="180">
-      </el-table-column>
-      <el-table-column
-        prop="handle_result"
-        label="是否已解决"
-        sortable
-        width="130"
-      >
+      <el-table-column prop="node" label="备注" width="180"> </el-table-column>
+      <el-table-column prop="result" label="是否已解决" sortable width="130">
+        <template slot-scope="scope">
+          {{ badRes[scope.row.result] }}
+        </template>
       </el-table-column>
     </el-table>
     <!-- 弹框 -->
@@ -99,11 +93,29 @@
         >
       </span>
     </el-dialog>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="page"
+      :page-sizes="[1, 2, 5, 10]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @prev-click="pageChange"
+      @next-click="pageChange"
+    >
+    </el-pagination>
   </div>
 </template>
 <script>
 import request from "../../utils/request";
-import { watchAllImg, getBadList } from "../../api/api";
+import {
+  watchAllImg,
+  getBadList,
+  getBadStatus,
+  getBadRes,
+  getBadType,
+} from "../../api/api";
 import { set } from "js-cookie";
 export default {
   data() {
@@ -115,15 +127,41 @@ export default {
       params: {},
       itemId: [],
       tableData: [],
+      badStatus: [],
+      badRes: [],
+      badType: [],
+      total: 0, //实现动态绑定
+      pageSize: 2,
+      page: 1,
     };
   },
   created() {
+    this.getStatus();
+    this.getType();
+    this.getRes();
     this.getList();
   },
   beforeUpdate() {
-    console.log(this.itemId);
+    // console.log(this.itemId);
   },
   methods: {
+    handleSizeChange(size) {
+      // 每页显示的数量是我们选择器选中的值size
+      this.pageSize = size;
+      console.log(this.pageSize); //每页下拉显示数据
+      this.getList();
+    },
+    //当改变当前页数的时候触发的事件
+    handleCurrentChange(currentPage) {
+      this.page = currentPage;
+      console.log(currentPage); //点击第几页
+      this.getList();
+    },
+    // 翻页
+    pageChange(current) {
+				this.page = current;
+			  this.getList();
+			},
     // 上传
     onUplode() {
       this.$router.push({ name: "badUplode" });
@@ -170,16 +208,32 @@ export default {
         })
         .catch((_) => {});
     },
+    // 获取状态
+    async getStatus() {
+      this.badStatus = await getBadStatus();
+    },
+    // 获取结果
+    async getRes() {
+      this.badRes = await getBadRes();
+    },
+    //获取问题类型
+    async getType() {
+      this.badType = await getBadType();
+    },
     // 获取badcase列表
     async getList() {
       const loading = this.$loading({
         lock: true,
       });
-
+      let data = {
+        page: this.page,
+        page_size: this.pageSize,
+      };
       try {
-        let result = await getBadList();
-        this.tableData = result;
-        console.log(this.tableData[0],'---')
+        let result = await getBadList(data);
+        console.log(result);
+        this.tableData = result.results;
+        this.total = result.count;
         loading.close();
       } catch {
         loading.close();
@@ -188,7 +242,6 @@ export default {
     //  选中当前的内容
     handleEdit(row) {
       this.itemId = [];
-      console.log(row);
       for (let i = 0; i < row.length; i++) {
         console.log(row[i].task_id);
         let res = this.itemId.push(row[i].task_id);

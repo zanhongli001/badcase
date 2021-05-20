@@ -4,19 +4,21 @@
       <h2>badcase反馈详情</h2>
       <p>
         <span>任务ID：</span>
-        <span>{{ form.task_id }}</span>
+        <span>{{ form.id }}</span>
       </p>
       <p>
         <span>场景分类：</span>
-        <span>{{ form.scene_classify }}</span>
+        <span>{{ form.cate }}</span>
       </p>
       <p>
         <span>问题类型：</span>
-        <span>{{ form.feedback_type }}</span>
+        <span> 
+          {{badType[form.type]}}
+       </span>
       </p>
       <p>
         <span>问题描述：</span>
-        <span>{{ form.feedback_description }}</span>
+        <span>{{ form.desc }}</span>
       </p>
       <p>
         <span class="data-img">问题图片</span>
@@ -41,7 +43,7 @@
             >已分析处理</el-checkbox
           >
           <el-form-item label="备注：">
-            <el-input v-model="form.desc"></el-input>
+            <el-input v-model="form.descl"></el-input>
           </el-form-item>
           <el-button type="primary" class="sub" @click="subDetailList(form) "
             >提交</el-button
@@ -54,12 +56,12 @@
   </div>
 </template>
 <script>
-import { getCaseDetail ,subBadDetail} from "../../api/api";
+import { getCaseDetail ,subBadDetail,getBadType} from "../../api/api";
 export default {
   data() {
     return {
       form: {
-        desc: "",
+        descl: "",
         is_checked: false,
         is_handle: "否",
       },
@@ -67,10 +69,12 @@ export default {
       imageUrl: [],
       numCassfil: [],
       listId: this.$route.query.id,
+      badType:[]
       
     };
   },
   mounted() {
+    this.getType()
     this.getDetailList();
   },
   beforeUpdate() {
@@ -103,7 +107,11 @@ export default {
       console.log(data)
      let respons = await subBadDetail(data)
      console.log(respons)
-    }
+    },
+     //获取问题类型
+ async getType() {
+     this.badType = await getBadType()
+    },
   },
 };
 </script>
