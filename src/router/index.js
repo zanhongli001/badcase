@@ -55,7 +55,7 @@
 //     }]
 //   },
 
-  
+
 
 //   {
 //     path: '/badTool',
@@ -69,7 +69,7 @@
 //         name: 'Policy',
 //         component: () => import('@/views/policy/Policy'),
 //         meta: { title: '底库数据', icon: 'table' },
-       
+
 //       },
 //       {
 //         path: 'website',
@@ -81,7 +81,7 @@
 //         name:'baseUplode',
 //         path:'baseUplode',
 //         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/baseUplode.vue'),
-        
+
 //       },
 //       {
 //         name:'faceRepeat',
@@ -97,13 +97,13 @@
 //         name:'badUplode',
 //         path: 'badUplode',
 //         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badUplode')
-       
+
 //       },
 //       {
 //         name:'badDetails',
 //         path: 'badDetails',
 //         component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badDetails')
-       
+
 //       },
 //     ]
 //   },
@@ -129,9 +129,9 @@
 //       }
 //     ]
 //   },
- 
-  
-  
+
+
+
 
 //   // 404 page must be placed at the end !!!
 //   { path: '*', redirect: '/404', hidden: true }
@@ -165,71 +165,58 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
-      name:'home',
+      name: 'home',
       path: '/',
       redirect: '/policy',
       component: Home,
-      children:[
+      children: [
         {
-        name:'website',
-        path:'website',
-        component: () => import(/* webpackChunkName: "TextAudit" */"@/views/website/Website.vue"),
-      },{
-        name:'policy',
-        path:'policy',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/Policy.vue')
-      },
-      {
-        name:'baseUplode',
-        path:'baseUplode',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/baseUplode.vue')
-      },
-      {
-        name:'faceRepeat',
-        path:'faceRepeat',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/faceRepeat.vue')
-      },
-      {
-        name:'dedailPage',
-        path:'dedailPage',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/dedailPage.vue')
-      },
-    
-     
-      {
-        name:'badUplode',
-        path: 'badUplode',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badUplode')
-       
-      },
-      {
-        name:'badDetails',
-        path: 'badDetails',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badDetails')
-       
-      },
-      {
-        name:'policyText',
-        path: 'policyText',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/policyText.vue')
-       
-      },
-      {
-        name:'badText',
-        path: 'badText',
-        component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/badText.vue')
-       
-      },
-    ]
+          path: '/policy',
+          name: 'policy',
+          component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/Policy.vue')
+        },
+        {
+          path: '/baseUplode',
+          name: 'baseUplode',
+          component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/baseUplode.vue')
+        },
+        {
+          path: '/dedailPage',
+          name: 'dedailPage',
+          component: () => import(/* webpackChunkName: "TextAudit" */'@/views/policy/dedailPage.vue')
+        },
+
+        {
+          path: '/website',
+          name: 'website',
+          component: () => import(/* webpackChunkName: "TextAudit" */"@/views/website/Website.vue"),
+        },
+        {
+          path: '/badUplode',
+          name: 'badUplode',
+          component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badUplode')
+
+        },
+        {
+          path: '/badDetails',
+          name: 'badDetails',
+          component: () => import(/* webpackChunkName: "TextAudit" */'@/views/website/badDetails')
+
+        },
+        {
+          path: '/policyText',
+          name: 'policyText',
+          component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/policyText.vue')
+
+        },
+        {
+          path: '/badText',
+          name: 'badText',
+          component: () => import(/* webpackChunkName: "TextAudit" */'@/views/files/badText.vue')
+
+        },
+      ]
     },
-    // {
-    //   name:'login',
-    //   path: '/login',
-    //   component: Login
-     
-    // },
-    
-    
   ]
 })
 
@@ -242,15 +229,15 @@ const router = new Router({
 //     let token = sessionStorage.getItem('token');
 //       console.log('全局守卫token：'+token)
 //     if (token === null || token === '') {
-    
+
 //       //console.log('验证失败token：')
 //       alert('请先登录');
 //       next('/login');
-      
+
 //     } else {
 //       next();
 //     }
 //   }
 // });
- 
+
 export default router;
