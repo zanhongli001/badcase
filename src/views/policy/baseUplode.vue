@@ -7,8 +7,8 @@
 					<el-option
 						v-for="(item, key) in typeOptions"
 						:key="key"
-						:label="item"
-						:value="key"
+						:label="item.label"
+						:value="item.value"
 					></el-option>
 				</el-select>
 			</el-form-item>
@@ -41,7 +41,7 @@
 				<upload-img action="/v1_badcase/policy/file/" @change="uploadChange"></upload-img>
 			</el-form-item>
 			<el-form-item>
-				<el-button class="opt-btn" @click="handleCancel">取消</el-button>
+				<el-button class="opt-btn" @click="backToList">取消</el-button>
 				<el-button class="opt-btn" type="primary" @click="handleSubmit('form')">提交</el-button>
 			</el-form-item>
 		</el-form>
@@ -77,10 +77,11 @@
 					person: '',
 					cate: '', // 二级分类的name
 					file: [],
+					files: [],
 					username: 'admin',
 				},
 				cateOptions: [],
-				typeOptions: {},
+				typeOptions: [],
 				rules: {
 					type: [{ required: true, message: '请选择数据类型', trigger: 'change' }],
 					desc: [{ required: true, message: '请输入描述', trigger: 'blur' }],
@@ -90,8 +91,9 @@
 			};
 		},
 		methods: {
-			uploadChange(ids) {
-				this.form.file = ids;
+			uploadChange(list) {
+				this.form.file = list.map((item) => item.id);
+				this.form.files = list.map((item) => item.file);
 			},
 			// 提交
 			handleSubmit(formName) {
@@ -99,10 +101,11 @@
 					if (valid) {
 						console.log('this.form', this.form);
 						let result = await addPol(this.form);
-						this.$message.success('成功');
-						console.log(result);
+						if (result.status === 201) {
+							this.$message.success('成功');
+						}
 					} else {
-						this.$message.error('请填写完整');
+						this.$message.error('请完善表单');
 						return false;
 					}
 				});
@@ -116,11 +119,16 @@
 			},
 			async getTypeList() {
 				let result = await typeList();
-				console.log('result', result);
+				result = result.map((item) => {
+					return {
+						label: item[1],
+						value: item[0],
+					};
+				});
 				this.typeOptions = result;
 			},
-			handleCancel() {
-				this.$router.push({ path: '/policy' });
+			backToList() {
+				this.$router.push({ name: 'policy' });
 			},
 
 			// 弹框

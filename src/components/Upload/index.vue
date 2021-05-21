@@ -57,10 +57,10 @@
 				this.previewVisible = true;
 			},
 			handleSuccess(response, file, fileList) {
-				let fileIds = fileList.map((item) => {
-					return item.response && item.response.id;
+				let list = fileList.map((item) => {
+					return item.response || {};
 				});
-				this.$emit('change', fileIds);
+				this.$emit('change', list);
 			},
 			beforeUpload(file, fileList) {},
 			checkType(file) {},
