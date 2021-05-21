@@ -12,21 +12,21 @@ export function getPolList(params) {
 // 底库状态
 export function getPolStatus() {
   return fetchGet('policy/meta/task_status/').then((res) => {
-    console.log(res, 'res')
+    // console.log(res, 'res')
     return res.data
   })
 }
 // 底库列表结果
 export function getPolRes() {
   return fetchGet('policy/meta/task_result/').then((res) => {
-    console.log(res)
+    // console.log(res)
     return res.data
   })
 }
 //底库列表问题类型
 export function getPolType() {
   return fetchGet('policy/meta/task_type/').then((res) => {
-    console.log(res)
+    // console.log(res)
     return res.data
   })
 }
@@ -68,14 +68,13 @@ export function queryPol(params) {
 // badcase列表
 export function getBadList(params) {
   return fetchGet('badcase/task/', params).then((res) => {
-    console.log(res)
+    // console.log(res)
     return res.data
   })
 }
 
 // 上传badcase数据
 export function uplodBad(data) {
-  console.log(data)
   return fetchPost('/AIBadCase', data).then((res) => {
     // console.log(res)
     return res
@@ -84,21 +83,21 @@ export function uplodBad(data) {
 // badcase状态
 export function getBadStatus() {
   return fetchGet('badcase/meta/task_status/').then((res) => {
-    console.log(res, 'res')
+    // console.log(res, 'res')
     return res.data
   })
 }
 // badcase结果
 export function getBadRes() {
   return fetchGet('badcase/meta/task_result/').then((res) => {
-    console.log(res)
+    // console.log(res)
     return res.data
   })
 }
 //badcase问题类型
 export function getBadType() {
   return fetchGet('badcase/meta/task_type/').then((res) => {
-    console.log(res)
+    // console.log(res)
     return res.data
   })
 }
@@ -106,7 +105,7 @@ export function getBadType() {
 
 export function watchAllImg(params) {
   return fetchGet(`/AIBatchImages?task_id=${params}`).then((res) => {
-    console.log(res.data.data.feedback_image)
+    // console.log(res.data.data.feedback_image)
     return res.data.data.feedback_image
   })
 }
@@ -121,7 +120,7 @@ export function getCaseDetail(params) {
 // badcase上传获取场景分类
 export function getBadIfy(params) {
   return fetchGet('badcase/scene_category/', params).then((res) => {
-    console.log(res)
+    // console.log(res)
     return res.data.results
   })
 }
@@ -130,9 +129,9 @@ export function getBadIfy(params) {
 
 // 上传badcase数据
 export function subBadDetail(data) {
-  console.log(data)
+//   console.log(data)
   return fetchPost('/AIBadCaseFeedback', data).then((res) => {
-    console.log(res)
+    // console.log(res)
     return res
   })
 }
