@@ -43,30 +43,52 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="cate" label="场景分类"  sortable='custom'  width="120">
+      <el-table-column
+        prop="cate"
+        label="场景分类"
+        sortable="custom"
+        width="120"
+        :filters="[{ text: tableData.cate, value: tableData.cate }]"
+       :filter-method="filterTag"
+      filter-placement="bottom-end">
       </el-table-column>
       <el-table-column prop="type" label="问题类型" width="80">
         <template slot-scope="scope">
           {{ badType[scope.row.type] }}
         </template>
       </el-table-column>
-      <el-table-column prop="desc" label="描述" sortable width="180">
+      <el-table-column prop="desc" label="描述" sortable="custom" width="180">
       </el-table-column>
       <el-table-column prop="status" label="状态" width="70">
         <template slot-scope="scope">
           {{ badStatus[scope.row.status] }}
         </template>
       </el-table-column>
-      <el-table-column prop="username" label="提交人" sortable width="90">
+      <el-table-column
+        prop="username"
+        label="提交人"
+        sortable="custom"
+        width="90"
+      >
       </el-table-column>
-      <el-table-column prop="handler" label="处理人" sortable width="90">
+      <el-table-column
+        prop="handler"
+        label="处理人"
+        sortable="custom"
+        width="90"
+      >
       </el-table-column>
       <el-table-column prop="update_time" label="上传时间" width="180">
       </el-table-column>
       <el-table-column prop="create_time" label="处理时间" width="180">
       </el-table-column>
       <el-table-column prop="node" label="备注" width="180"> </el-table-column>
-      <el-table-column prop="result" label="是否已解决" sortable width="130">
+      <el-table-column
+        prop="result"
+        label="是否已解决"
+        sortable="custom"
+        width="130"
+      >
         <template slot-scope="scope">
           {{ badRes[scope.row.result] }}
         </template>
@@ -95,24 +117,22 @@
       </span>
     </el-dialog>
     <div class="page">
-       <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="page"
-      :page-sizes="[1, 2, 5, 10]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      @prev-click="pageChange"
-      @next-click="pageChange"
-    >
-    </el-pagination>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="page"
+        :page-sizes="[1, 2, 5, 10]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @prev-click="pageChange"
+        @next-click="pageChange"
+      >
+      </el-pagination>
     </div>
-   
   </div>
 </template>
 <script>
-import request from "../../utils/request";
 import {
   watchAllImg,
   getBadList,
@@ -137,6 +157,7 @@ export default {
       total: 0, //实现动态绑定
       pageSize: 2,
       page: 1,
+      ordering: "",
     };
   },
   created() {
@@ -145,14 +166,24 @@ export default {
     this.getRes();
     this.getList();
   },
-  beforeUpdate() {
-    // console.log(this.itemId);
+  updated() {
   },
   methods: {
+    filterTag(value, row) {
+      console.log(value,'---',row)
+        return row.case === value;
+      },
     // 排序
-    sortChange(column){
- console.log(column)
- 
+    sortChange(column) {
+      // console.log(column);
+      if (column.order == "ascending") {
+        this.ordering = column.prop;
+        this.getList();
+      }
+      if (column.order == "descending") {
+        this.ordering = `-${column.prop}`;
+        this.getList();
+      }
     },
     handleSizeChange(size) {
       // 每页显示的数量是我们选择器选中的值size
@@ -163,21 +194,16 @@ export default {
     //当改变当前页数的时候触发的事件
     handleCurrentChange(currentPage) {
       this.page = currentPage;
-      console.log(currentPage); //点击第几页
       this.getList();
     },
     // 翻页
     pageChange(current) {
-				this.page = current;
-			  this.getList();
-			},
+      this.page = current;
+      this.getList();
+    },
     // 上传
     onUplode() {
       this.$router.push({ name: "badUplode" });
-    },
-    // 表格
-    formatter(row, column) {
-      return row.address;
     },
     cellClass(row) {
       if (row.columnIndex === 0) {
@@ -186,7 +212,6 @@ export default {
     },
     //    点击详情
     openDedail(id) {
-      console.log(id);
       this.$router.push({ name: "badDetails", query: { id: id } });
     },
     all() {
@@ -199,7 +224,6 @@ export default {
     },
     // 查看图片
     async allImg() {
-      // this.imgUrl =[]
       if (this.itemId == "") {
         this.$message("请选择要查看的图片");
         return;
@@ -237,10 +261,10 @@ export default {
       let data = {
         page: this.page,
         page_size: this.pageSize,
+        ordering: this.ordering,
       };
       try {
         let result = await getBadList(data);
-        console.log(result);
         this.tableData = result.results;
         this.total = result.count;
         loading.close();
@@ -252,7 +276,6 @@ export default {
     handleEdit(row) {
       this.itemId = [];
       for (let i = 0; i < row.length; i++) {
-        console.log(row[i].task_id);
         let res = this.itemId.push(row[i].task_id);
         console.log(res);
       }
@@ -305,7 +328,7 @@ export default {
 .el-img {
   margin-left: 10px;
 }
-.page{
+.page {
   margin-top: 10px;
   float: right;
 }

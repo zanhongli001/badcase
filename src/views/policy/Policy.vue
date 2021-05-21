@@ -27,6 +27,7 @@
       border
       style="width: 100%"
       :default-sort="{ prop: 'date', order: 'descending' }"
+      @sort-change="sortChange"
     >
       <el-table-column label="任务ID" width="100">
         <template slot-scope="scope">
@@ -35,19 +36,19 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="type" label="类型" sortable>
+      <el-table-column prop="type" label="类型" sortable='custom'>
           <template slot-scope="scope">
           {{badType[scope.row.type]}}
         </template>
          </el-table-column>
       <el-table-column prop="desc" label="描述"> </el-table-column>
-      <el-table-column prop="status" label="状态" sortable>
+      <el-table-column prop="status" label="状态" sortable='custom'>
          <template slot-scope="scope">
           {{badStatus[scope.row.status]}}
         </template>
          </el-table-column>
       <el-table-column prop="username" label="提交人"> </el-table-column>
-      <el-table-column prop="auditer" label="审核人" sortable>
+      <el-table-column prop="auditer" label="审核人" sortable='custom'>
       </el-table-column>
       <el-table-column prop="update_time" label="上传时间"> </el-table-column>
       <el-table-column prop="create_time" label="审核时间"> </el-table-column>
@@ -99,6 +100,7 @@ export default {
        total: 0, //实现动态绑定
       pageSize: 2,
       page: 1,
+      ordering:''
     };
   },
   created() {
@@ -108,6 +110,18 @@ export default {
     this.getList();
   },
   methods: {
+    // 排序
+     sortChange(column) {
+      console.log(column);
+      if (column.order == "ascending") {
+        this.ordering = column.prop;
+        this.getList();
+      }
+      if (column.order == "descending") {
+        this.ordering = `-${column.prop}`;
+        this.getList();
+      }
+    },
       handleSizeChange(size) {
       // 每页显示的数量是我们选择器选中的值size
       this.pageSize = size;
@@ -153,6 +167,7 @@ export default {
        let data = {
         page: this.page,
         page_size: this.pageSize,
+        ordering: this.ordering,
       };
      try{
         let result = await getPolList(data);
